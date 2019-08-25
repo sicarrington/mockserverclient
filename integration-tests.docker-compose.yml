@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  # integrationtests:
+  #   build:
+  #     # image: integrationtests
+  #     context: .
+  #     dockerfile: integration-tests.Dockerfile
+  #   networks: 
+  #     - integreationnetwork
+  mockserverhost:
+    image: jamesdbloom/mockserver
+    networks: 
+            - integreationnetwork
+    ports:
+      - "8080:1080"
+networks:
+    integreationnetwork:
+        # driver: bridge
