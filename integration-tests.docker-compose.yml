@@ -13,7 +13,7 @@ services:
     networks: 
             - integreationnetwork
     ports:
-      - "8080:1080"
+      - "1080:1080"
 networks:
     integreationnetwork:
         # driver: bridge

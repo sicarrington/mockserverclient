@@ -1,8 +1,17 @@
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using MockServer.Client.Net.Builders;
 using MockServer.Client.Net.Models;
 using Newtonsoft.Json;
+
+[assembly: InternalsVisibleTo("MockServer.Client.Net.Tests.Unit")]
+
+public class poops
+{
+
+}
 
 namespace MockServer.Client.Net
 {
@@ -14,7 +23,7 @@ namespace MockServer.Client.Net
             _httpClient = httpClient;
         }
 
-        public async Task SetExpectations(Expectation expectations)
+        public virtual async Task SetExpectations(Expectation expectations)
         {
             var httpRequestMessage = new HttpRequestMessage(HttpMethod.Put, "/expectation");
             httpRequestMessage.Content = new StringContent(
@@ -29,6 +38,10 @@ namespace MockServer.Client.Net
             );
 
             await _httpClient.SendAsync(httpRequestMessage);
+        }
+        public ExpectationBuilder When(RequestBuilder requestBuilder)
+        {
+            return ExpectationBuilder.When(this, requestBuilder);
         }
     }
 }

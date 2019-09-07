@@ -4,7 +4,7 @@ using System.Net.Http;
 using MockServer.Client.Net;
 using MockServer.Client.Net.Models;
 
-namespace mockserver.client.net.tests.integration
+namespace MockServer.Client.Net.Tests.Integration
 {
     public class UnitTest1
     {
@@ -14,7 +14,7 @@ namespace mockserver.client.net.tests.integration
             var expectedReponseBody = "This is the response body";
             using (var httpClient = new HttpClient())
             {
-                httpClient.BaseAddress = new Uri("http://mockserverhost:1080/");
+                httpClient.BaseAddress = new Uri("http://localhost:1080/");
                 var mockServerClient = new MockServer.Client.Net.MockServerClient(
                     httpClient
                 );
