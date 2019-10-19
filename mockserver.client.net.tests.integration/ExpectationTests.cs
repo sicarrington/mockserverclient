@@ -6,7 +6,7 @@ using MockServer.Client.Net.Models;
 
 namespace MockServer.Client.Net.Tests.Integration
 {
-    public class UnitTest1
+    public class ExpectationTests
     {
         [Fact]
         public async void GivenExpectationIsSet_ThenMockServerRespondsToExpectation()

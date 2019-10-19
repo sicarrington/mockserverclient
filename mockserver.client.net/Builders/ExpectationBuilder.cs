@@ -49,11 +49,9 @@ namespace MockServer.Client.Net.Builders
                 HttpResponse = responseBuilder.Create()
             };
 
+            var task = Task.Run(async () => { await _mockServerClient.SetExpectations(expectation); });
+            task.Wait();
 
-            new Task(() =>
-            {
-                _mockServerClient.SetExpectations(expectation).RunSynchronously();
-            }).RunSynchronously();
             return expectation;
         }
     }

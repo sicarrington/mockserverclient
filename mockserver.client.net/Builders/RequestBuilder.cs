@@ -29,6 +29,15 @@ namespace MockServer.Client.Net.Builders
             _httpRequest.Method = method.Method;
             return this;
         }
+        public virtual RequestBuilder WithBody(string requestBody)
+        {
+            if (requestBody == null)
+            {
+                throw new ArgumentNullException(nameof(requestBody));
+            }
+            _httpRequest.Body = requestBody;
+            return this;
+        }
         public virtual HttpRequest Create()
         {
             return _httpRequest;

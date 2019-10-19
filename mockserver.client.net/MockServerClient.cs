@@ -37,7 +37,11 @@ namespace MockServer.Client.Net
                 "application/json"
             );
 
-            await _httpClient.SendAsync(httpRequestMessage);
+            var result = await _httpClient.SendAsync(httpRequestMessage);
+            // if (result.StatusCode != System.Net.HttpStatusCode.Created)
+            // {
+            //     throw new System.Exception($"Failed to create expectation, status code was {result.StatusCode}");
+            // }
         }
         public ExpectationBuilder When(RequestBuilder requestBuilder)
         {
