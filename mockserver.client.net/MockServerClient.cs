@@ -38,14 +38,28 @@ namespace MockServer.Client.Net
             );
 
             var result = await _httpClient.SendAsync(httpRequestMessage);
-            // if (result.StatusCode != System.Net.HttpStatusCode.Created)
-            // {
-            //     throw new System.Exception($"Failed to create expectation, status code was {result.StatusCode}");
-            // }
         }
         public ExpectationBuilder When(RequestBuilder requestBuilder)
         {
             return ExpectationBuilder.When(this, requestBuilder);
+        }
+        public async Task<bool> Verify(HttpRequest request, VerificationTimes verificationTimes)
+        {
+            var verification = new Verification(request, verificationTimes);
+            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Put, "/verify");
+            httpRequestMessage.Content = new StringContent(
+                JsonConvert.SerializeObject(verification,
+                    Formatting.Indented,
+                            new JsonSerializerSettings
+                            {
+                                NullValueHandling = NullValueHandling.Ignore
+                            }),
+                Encoding.UTF8,
+                "application/json"
+            );
+
+            var result = await _httpClient.SendAsync(httpRequestMessage);
+            return result.StatusCode == System.Net.HttpStatusCode.Accepted;
         }
     }
 }
