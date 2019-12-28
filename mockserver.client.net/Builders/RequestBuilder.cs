@@ -1,6 +1,6 @@
+using MockServer.Client.Net.Models;
 using System;
 using System.Net.Http;
-using MockServer.Client.Net.Models;
 
 namespace MockServer.Client.Net.Builders
 {

@@ -1,10 +1,10 @@
+using MockServer.Client.Net.Builders;
+using MockServer.Client.Net.Models;
+using Newtonsoft.Json;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using MockServer.Client.Net.Builders;
-using MockServer.Client.Net.Models;
-using Newtonsoft.Json;
 
 [assembly: InternalsVisibleTo("MockServer.Client.Net.Tests.Unit")]
 

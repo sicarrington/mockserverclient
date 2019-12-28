@@ -1,8 +1,6 @@
-using Xunit;
 using MockServer.Client.Net.Builders;
 using System;
-using MockServer.Client.Net;
-using MockServer.Client.Net.Models;
+using Xunit;
 
 namespace MockServer.Client.Net.Tests.Unit.BuilderTests.RequestBuilderTests
 {

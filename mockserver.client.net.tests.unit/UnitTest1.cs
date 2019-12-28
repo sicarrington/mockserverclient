@@ -1,13 +1,12 @@
-using System;
-using Xunit;
-using System.Net.Http;
-using MockServer.Client.Net;
 using MockServer.Client.Net.Models;
 using Moq;
-using System.Threading.Tasks;
 using Moq.Protected;
-using System.Threading;
+using System;
 using System.Net;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace MockServer.Client.Net.Unit
 {

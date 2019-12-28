@@ -1,9 +1,9 @@
-using System;
-using System.Net.Http;
-using System.Threading.Tasks;
 using MockServer.Client.Net.Builders;
 using MockServer.Client.Net.Models;
 using Moq;
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace MockServer.Client.Net.Tests.Unit.BuilderTests.ExpectationBuilderTests

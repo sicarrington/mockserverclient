@@ -1,10 +1,8 @@
-using System;
-using Xunit;
-using System.Net.Http;
-using MockServer.Client.Net;
-using MockServer.Client.Net.Models;
 using MockServer.Client.Net.Builders;
+using MockServer.Client.Net.Models;
+using System;
 using System.Net.Http;
+using Xunit;
 
 
 namespace MockServer.Client.Net.Tests.Integration
