@@ -27,7 +27,7 @@ test_script:
   # restore packages for our unit tests
   - cmd: dotnet restore ./mockserver.client.net.tests.unit/mockserver.client.net.tests.unit.csproj --verbosity m
   # run the unit tests (requires changing into the test directory)
-  - cmd: dotnet test ./mockserver.client.net.tests.unit/mockserver.client.net.tests.unit.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude=&quot;[*]MockServer.Client.Net.Models.*&quot;
+  - cmd: dotnet test ./mockserver.client.net.tests.unit/mockserver.client.net.tests.unit.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude="[*]MockServer.Client.Net.Models.*"
   - cmd: bash coveralls.sh
 on_finish :
   # any cleanup in here
