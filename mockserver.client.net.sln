@@ -1,13 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mockserver.client.net", "mockserver.client.net\mockserver.client.net.csproj", "{9FE13FDE-9CD3-46B2-9B3E-56EAF3878FCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mockserver.client.net", "mockserver.client.net\mockserver.client.net.csproj", "{9FE13FDE-9CD3-46B2-9B3E-56EAF3878FCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mockserver.client.net.tests.unit", "mockserver.client.net.tests.unit\mockserver.client.net.tests.unit.csproj", "{002D1CA3-8034-400E-9D08-ADEE7FA7FCC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mockserver.client.net.tests.unit", "mockserver.client.net.tests.unit\mockserver.client.net.tests.unit.csproj", "{002D1CA3-8034-400E-9D08-ADEE7FA7FCC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mockserver.client.net.tests.integration", "mockserver.client.net.tests.integration\mockserver.client.net.tests.integration.csproj", "{AB1CC1CF-84DB-48CC-8831-CFDE526D4BA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mockserver.client.net.tests.integration", "mockserver.client.net.tests.integration\mockserver.client.net.tests.integration.csproj", "{AB1CC1CF-84DB-48CC-8831-CFDE526D4BA6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{228280EA-02C4-4AED-88F1-2466EC0037A1}"
+	ProjectSection(SolutionItems) = preProject
+		appveyor.yml = appveyor.yml
+		coveralls.sh = coveralls.sh
+		Readme.md = Readme.md
+		runintegrationtests.sh = runintegrationtests.sh
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,9 +25,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{9FE13FDE-9CD3-46B2-9B3E-56EAF3878FCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -58,5 +63,11 @@ Global
 		{AB1CC1CF-84DB-48CC-8831-CFDE526D4BA6}.Release|x64.Build.0 = Release|Any CPU
 		{AB1CC1CF-84DB-48CC-8831-CFDE526D4BA6}.Release|x86.ActiveCfg = Release|Any CPU
 		{AB1CC1CF-84DB-48CC-8831-CFDE526D4BA6}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9A8A0563-7E23-4905-9780-6434074637BC}
 	EndGlobalSection
 EndGlobal
