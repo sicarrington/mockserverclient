@@ -26,5 +26,16 @@ jobs:
       run: dotnet build --no-restore
     - name: Unit Tests
       run: dotnet test --no-build --verbosity normal --filter FullyQualifiedName!~integration
-    - name: Integration Tests
-      run: ./runintegrationtests.sh
+  
+  integration-tests:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Start containers
+        run:  docker-compose -f "docker-compose.yml" up -d --build
+      - name: Wait
+        run: bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:1080)" != "404" ]]; do sleep 5; done'
+      - name: Test
+        run: dotnet test
+      - name: Clean up
+        run: docker-compose -f ./integration-tests.docker-compose.yml stop
