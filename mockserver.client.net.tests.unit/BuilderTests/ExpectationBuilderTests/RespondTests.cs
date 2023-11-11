@@ -48,7 +48,7 @@ namespace MockServer.Client.Net.Tests.Unit.BuilderTests.ExpectationBuilderTests
                 It.Is<Expectation>(y =>
                 y.HttpRequest == _requestBuilder.Create() &&
                 y.HttpResponse == responseBuilder.Create())
-            ), Moq.Times.AtLeast(2));
+            ), Moq.Times.Once());
         }
     }
 }

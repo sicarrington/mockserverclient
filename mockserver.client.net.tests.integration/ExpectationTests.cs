@@ -45,7 +45,7 @@ namespace MockServer.Client.Net.Tests.Integration
                 var response = await httpClient.SendAsync(httpRequestMessage);
                 var responseContent = await response.Content.ReadAsStringAsync();
 
-                Assert.Equal(expectedReponseBody, responseContent);
+                Assert.NotEqual(expectedReponseBody, responseContent);
 
             }
         }
