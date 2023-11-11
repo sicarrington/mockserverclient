@@ -1,0 +1,43 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Unit Tests
+      run: dotnet test --no-build --verbosity normal --filter FullyQualifiedName!~integration 
+  
+  integration-tests:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Start containers
+        run:  docker-compose -f "./integration-tests.docker-compose.yml" up -d --build
+      - name: Wait
+        run: bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:1080)" != "404" ]]; do sleep 5; done'
+      - name: Test
+        run: dotnet test --filter FullyQualifiedName~integration
+      - name: Clean up
+        run: docker-compose -f ./integration-tests.docker-compose.yml stop
