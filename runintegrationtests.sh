@@ -1,10 +1,6 @@
-# docker-compose -f ./integration-tests.docker-compose.yml build
-
-docker build -f integration-tests.Dockerfile -t tests .
-
 docker-compose -f ./integration-tests.docker-compose.yml up -d
 
-# docker run --network mockserverclient_integreationnetwork tests
+bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:1080)" != "404" ]]; do sleep 5; done'
 
 dotnet test
 

@@ -1,6 +1,5 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:2.2 AS test
-# COPY *.sln .
-# COPY *.csproj ./
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS test
+
 COPY . .
 RUN dotnet restore
 

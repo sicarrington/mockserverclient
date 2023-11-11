@@ -10,7 +10,7 @@ using Xunit;
 
 namespace MockServer.Client.Net.Unit
 {
-    public class UnitTest1
+    public class ApiTests
     {
         [Fact]
         public async void GivenSetExpectationsIsCalled_ThenApiIsCalledToSetExpectations()

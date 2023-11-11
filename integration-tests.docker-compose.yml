@@ -1,15 +1,9 @@
 version: '3.7'
 
 services:
-  # integrationtests:
-  #   build:
-  #     # image: integrationtests
-  #     context: .
-  #     dockerfile: integration-tests.Dockerfile
-  #   networks: 
-  #     - integreationnetwork
   mockserverhost:
-    image: jamesdbloom/mockserver
+    platform: linux/amd64
+    image: mockserver/mockserver:5.15.0
     networks: 
             - integreationnetwork
     ports:

@@ -32,7 +32,7 @@ namespace MockServer.Client.Net.Tests.Integration
         [Fact]
         public async void GivenExpectationIsSetOnPath_WhenRequestIsMadeForNonMatchingPath_ThenMatchIsNotMade()
         {
-            var path = "/pathtest";
+            var path = "/pathtestnotmatching";
 
             using (var httpClient = new HttpClient())
             {

@@ -25,8 +25,7 @@ namespace MockServer.Client.Net.Tests.Integration
                         Path = "/hello",
                         Method = "GET",
                         Secure = false,
-                        KeepAlive = true,
-                        Body = "hellooooooo"
+                        KeepAlive = true
 
                     },
                     HttpResponse = new HttpResponse
