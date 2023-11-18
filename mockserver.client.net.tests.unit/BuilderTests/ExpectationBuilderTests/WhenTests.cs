@@ -10,7 +10,7 @@ namespace MockServer.Client.Net.Tests.Unit.BuilderTests.ExpectationBuilderTests
         [Fact]
         public void GivenWhenIsCalled_WhenMockServerClientPassedIsNull_ThenExceptionIsThrown()
         {
-            var requestBuilder = RequestBuilder.Request();
+            var requestBuilder = new RequestBuilder();
             Assert.Throws<ArgumentNullException>(() =>
             {
                 ExpectationBuilder.When(null, requestBuilder);
@@ -34,7 +34,7 @@ namespace MockServer.Client.Net.Tests.Unit.BuilderTests.ExpectationBuilderTests
             using (var httpClient = new HttpClient())
             {
                 var mockServerClient = new MockServerClient(httpClient);
-                var requestBuilder = RequestBuilder.Request();
+                var requestBuilder = new RequestBuilder();
 
                 var result = ExpectationBuilder.When(mockServerClient, requestBuilder);
 

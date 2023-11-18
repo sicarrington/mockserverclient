@@ -19,7 +19,7 @@ namespace MockServer.Client.Net.Tests.Integration
             {
                 httpClient.BaseAddress = new Uri("http://localhost:1080/");
 
-                var expectedRequest = RequestBuilder.Request()
+                var expectedRequest = new RequestBuilder()
                         .WithMethod(HttpMethod.Post)
                         .WithPath(path)
                         .WithBody(requestBody);
@@ -45,7 +45,7 @@ namespace MockServer.Client.Net.Tests.Integration
             {
                 httpClient.BaseAddress = new Uri("http://localhost:1080/");
 
-                var expectedRequest = RequestBuilder.Request()
+                var expectedRequest = new RequestBuilder()
                         .WithMethod(HttpMethod.Post)
                         .WithPath(path)
                         .WithBody(requestBody);

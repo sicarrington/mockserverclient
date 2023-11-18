@@ -18,7 +18,7 @@ namespace MockServer.Client.Net.Tests.Integration
                 httpClient.BaseAddress = new Uri("http://localhost:1080/");
 
                 var mockServerClient = new MockServerClient(httpClient)
-                    .When(RequestBuilder.Request()
+                    .When(new RequestBuilder()
                         .WithMethod(HttpMethod.Get)
                         .WithPath(path))
                     .Respond(ResponseBuilder.Respond().WithStatusCode(200));

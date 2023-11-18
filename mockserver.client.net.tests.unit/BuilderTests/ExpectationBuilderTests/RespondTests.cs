@@ -16,7 +16,7 @@ namespace MockServer.Client.Net.Tests.Unit.BuilderTests.ExpectationBuilderTests
         public RespondTests()
         {
             _mockServerClient = new Mock<MockServerClient>(new HttpClient());
-            _requestBuilder = RequestBuilder.Request();
+            _requestBuilder = new RequestBuilder();
 
             _expectationBuilder = ExpectationBuilder.When(_mockServerClient.Object, _requestBuilder);
         }

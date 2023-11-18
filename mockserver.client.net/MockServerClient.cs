@@ -2,16 +2,8 @@ using MockServer.Client.Net.Builders;
 using MockServer.Client.Net.Models;
 using Newtonsoft.Json;
 using System.Net.Http;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-
-[assembly: InternalsVisibleTo("MockServer.Client.Net.Tests.Unit")]
-
-public class poops
-{
-
-}
 
 namespace MockServer.Client.Net
 {
@@ -37,7 +29,7 @@ namespace MockServer.Client.Net
                 "application/json"
             );
 
-            var result = await _httpClient.SendAsync(httpRequestMessage);
+            _ = await _httpClient.SendAsync(httpRequestMessage);
         }
         public ExpectationBuilder When(RequestBuilder requestBuilder)
         {

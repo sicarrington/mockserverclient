@@ -11,10 +11,11 @@ namespace MockServer.Client.Net.Builders
         {
             _httpRequest = request;
         }
-        public static RequestBuilder Request()
+        public RequestBuilder()
         {
-            return new RequestBuilder(new HttpRequest());
+            _httpRequest = new HttpRequest();
         }
+        
         public virtual RequestBuilder WithPath(string path)
         {
             if (string.IsNullOrWhiteSpace(path))
