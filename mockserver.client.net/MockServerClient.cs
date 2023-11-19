@@ -1,8 +1,8 @@
 using MockServer.Client.Net.Builders;
 using MockServer.Client.Net.Models;
-using Newtonsoft.Json;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace MockServer.Client.Net
@@ -17,17 +17,14 @@ namespace MockServer.Client.Net
 
         public virtual async Task SetExpectations(Expectation expectations)
         {
-            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Put, "/expectation");
-            httpRequestMessage.Content = new StringContent(
-                JsonConvert.SerializeObject(expectations,
-                    Formatting.Indented,
-                            new JsonSerializerSettings
-                            {
-                                NullValueHandling = NullValueHandling.Ignore
-                            }),
+            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Put, "/expectation")
+            {
+                Content = new StringContent(
+                JsonSerializer.Serialize(expectations, JsonSerializerOptionsContants.Default),
                 Encoding.UTF8,
                 "application/json"
-            );
+            )
+            };
 
             _ = await _httpClient.SendAsync(httpRequestMessage);
         }
@@ -40,12 +37,7 @@ namespace MockServer.Client.Net
             var verification = new Verification(request, verificationTimes);
             var httpRequestMessage = new HttpRequestMessage(HttpMethod.Put, "/verify");
             httpRequestMessage.Content = new StringContent(
-                JsonConvert.SerializeObject(verification,
-                    Formatting.Indented,
-                            new JsonSerializerSettings
-                            {
-                                NullValueHandling = NullValueHandling.Ignore
-                            }),
+                JsonSerializer.Serialize(verification, JsonSerializerOptionsContants.Default),
                 Encoding.UTF8,
                 "application/json"
             );

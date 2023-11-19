@@ -1,9 +1,9 @@
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json;
 
 namespace MockServer.Client.Net.Models
 {
@@ -101,7 +101,7 @@ namespace MockServer.Client.Net.Models
         /// <returns>JSON string presentation of the object</returns>
         public virtual string ToJson()
         {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
+            return JsonSerializer.Serialize(this, JsonSerializerOptionsContants.Default);
         }
 
         /// <summary>
