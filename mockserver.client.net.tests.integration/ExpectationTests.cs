@@ -46,7 +46,6 @@ namespace MockServer.Client.Net.Tests.Integration
                 var responseContent = await response.Content.ReadAsStringAsync();
 
                 Assert.Equal(expectedReponseBody, responseContent);
-
             }
         }
     }
