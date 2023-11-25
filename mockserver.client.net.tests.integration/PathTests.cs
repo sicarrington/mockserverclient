@@ -21,7 +21,7 @@ namespace MockServer.Client.Net.Tests.Integration
                     .When(new RequestBuilder()
                         .WithMethod(HttpMethod.Get)
                         .WithPath(path))
-                    .Respond(ResponseBuilder.Respond().WithStatusCode(200));
+                    .Respond(new ResponseBuilder().WithStatusCode(200));
 
                 var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, path);
                 var response = await httpClient.SendAsync(httpRequestMessage);

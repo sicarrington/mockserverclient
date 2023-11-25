@@ -31,7 +31,7 @@ namespace MockServer.Client.Net.Tests.Unit.BuilderTests.ExpectationBuilderTests
         [Fact]
         public void GivenRespond_WhenResponseIsPassed_ThenExpectationIsBuiltAsExpected()
         {
-            var responseBuilder = ResponseBuilder.Respond();
+            var responseBuilder = new ResponseBuilder();
             var result = _expectationBuilder.Respond(responseBuilder);
 
             Assert.Equal(responseBuilder.Create(), result.HttpResponse);
@@ -41,7 +41,7 @@ namespace MockServer.Client.Net.Tests.Unit.BuilderTests.ExpectationBuilderTests
         public void GivenRespond_WhenResponseIsPassed_ThenExpectationIsSetAgainstMockServerClient()
         {
             _mockServerClient.Setup(x => x.SetExpectations(It.IsAny<Expectation>())).Returns(Task.CompletedTask);
-            var responseBuilder = ResponseBuilder.Respond();
+            var responseBuilder = new ResponseBuilder();
             var result = _expectationBuilder.Respond(responseBuilder);
 
             _mockServerClient.Verify(x => x.SetExpectations(

@@ -5,18 +5,22 @@ namespace MockServer.Client.Net.Builders
     public class ResponseBuilder
     {
         private readonly HttpResponse _httpResponse;
+        
         private ResponseBuilder(HttpResponse response)
         {
             _httpResponse = response;
         }
-        public static ResponseBuilder Respond()
+
+        public ResponseBuilder()
         {
-            return new ResponseBuilder(new HttpResponse());
+            _httpResponse = new HttpResponse();
         }
+
         public HttpResponse Create()
         {
             return _httpResponse;
         }
+
         public ResponseBuilder WithStatusCode(int statusCode)
         {
             _httpResponse.StatusCode = statusCode;

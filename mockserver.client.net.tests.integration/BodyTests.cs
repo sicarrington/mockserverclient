@@ -23,7 +23,7 @@ namespace MockServer.Client.Net.Tests.Integration
                         .WithMethod(HttpMethod.Post)
                         .WithPath(path)
                         .WithBody(requestBody))
-                    .Respond(ResponseBuilder.Respond().WithStatusCode(200));
+                    .Respond(new ResponseBuilder().WithStatusCode(200));
 
                 var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, path);
                 httpRequestMessage.Content = new StringContent(requestBody, System.Text.Encoding.UTF8);
@@ -47,7 +47,7 @@ namespace MockServer.Client.Net.Tests.Integration
                         .WithMethod(HttpMethod.Post)
                         .WithPath(path)
                         .WithBody(requestBody))
-                    .Respond(ResponseBuilder.Respond().WithStatusCode(200));
+                    .Respond(new ResponseBuilder().WithStatusCode(200));
 
                 var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, path);
                 httpRequestMessage.Content = new StringContent("This body does not match", System.Text.Encoding.UTF8);
