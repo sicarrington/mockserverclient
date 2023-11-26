@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../mockserver.client.net/mockserver.client.net.csproj" />
+    <ProjectReference Include="../../src/mockserver.client.net/mockserver.client.net.csproj" />
   </ItemGroup>
 
 </Project>
