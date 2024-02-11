@@ -4,7 +4,7 @@ using System.Net.Http;
 
 namespace MockServer.Client.Net.Builders
 {
-    public class RequestBuilder
+    public sealed class RequestBuilder
     {
         private readonly HttpRequest _httpRequest;
         private RequestBuilder(HttpRequest request)
@@ -15,8 +15,8 @@ namespace MockServer.Client.Net.Builders
         {
             _httpRequest = new HttpRequest();
         }
-        
-        public virtual RequestBuilder WithPath(string path)
+
+        public RequestBuilder WithPath(string path)
         {
             if (string.IsNullOrWhiteSpace(path))
             {
@@ -25,12 +25,12 @@ namespace MockServer.Client.Net.Builders
             _httpRequest.Path = path;
             return this;
         }
-        public virtual RequestBuilder WithMethod(HttpMethod method)
+        public RequestBuilder WithMethod(HttpMethod method)
         {
             _httpRequest.Method = method.Method;
             return this;
         }
-        public virtual RequestBuilder WithBody(string requestBody)
+        public RequestBuilder WithBody(string requestBody)
         {
             if (requestBody == null)
             {
@@ -39,7 +39,8 @@ namespace MockServer.Client.Net.Builders
             _httpRequest.Body = requestBody;
             return this;
         }
-        public virtual HttpRequest Create()
+        
+        public HttpRequest Create()
         {
             return _httpRequest;
         }

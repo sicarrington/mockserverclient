@@ -20,7 +20,7 @@ namespace MockServer.Client.Net.Models
     /// HttpObjectCallback
     /// </summary>
     [DataContract]
-    public partial class HttpObjectCallback : IEquatable<HttpObjectCallback>, IValidatableObject
+    public sealed partial class HttpObjectCallback : IEquatable<HttpObjectCallback>, IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpObjectCallback" /> class.
@@ -63,9 +63,9 @@ namespace MockServer.Client.Net.Models
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
+        public string ToJson()
         {
-            return JsonSerializer.Serialize(this, JsonSerializerOptionsContants.Default);
+            return JsonSerializer.Serialize(this, JsonSerializerOptionsConstants.Default);
         }
 
         /// <summary>

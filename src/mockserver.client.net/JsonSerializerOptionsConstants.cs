@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace MockServer.Client.Net
 {
-    public static class JsonSerializerOptionsContants
+    public static class JsonSerializerOptionsConstants
     {
         public static JsonSerializerOptions Default => new JsonSerializerOptions
         {

@@ -20,7 +20,7 @@ namespace MockServer.Client.Net.Models
     /// VerificationTimes
     /// </summary>
     [DataContract]
-    public partial class VerificationTimes : IEquatable<VerificationTimes>, IValidatableObject
+    public sealed partial class VerificationTimes : IEquatable<VerificationTimes>, IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="VerificationTimes" /> class.
@@ -63,9 +63,9 @@ namespace MockServer.Client.Net.Models
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
+        public string ToJson()
         {
-            return JsonSerializer.Serialize(this, JsonSerializerOptionsContants.Default);
+            return JsonSerializer.Serialize(this, JsonSerializerOptionsConstants.Default);
         }
 
         /// <summary>
@@ -127,5 +127,9 @@ namespace MockServer.Client.Net.Models
         {
             yield break;
         }
+        
+        public static VerificationTimes Once => new VerificationTimes(1, 1);
+        public static VerificationTimes Twice => new VerificationTimes(1, 1);
+        public static VerificationTimes Exactly(int specificNumberOfTimes) => new VerificationTimes(specificNumberOfTimes, specificNumberOfTimes);
     }
 }

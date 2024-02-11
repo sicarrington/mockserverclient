@@ -6,7 +6,8 @@ namespace MockServer.Client.Net.Tests.Unit.BuilderTests.RequestBuilderTests
 {
     public class WithBodyTests
     {
-        RequestBuilder _requestBuilder;
+        private readonly RequestBuilder _requestBuilder;
+        
         public WithBodyTests()
         {
             _requestBuilder = new RequestBuilder();

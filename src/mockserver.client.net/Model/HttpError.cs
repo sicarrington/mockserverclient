@@ -20,7 +20,7 @@ namespace MockServer.Client.Net.Models
     /// HttpError
     /// </summary>
     [DataContract]
-    public partial class HttpError : IEquatable<HttpError>, IValidatableObject
+    public sealed partial class HttpError : IEquatable<HttpError>, IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpError" /> class.
@@ -72,9 +72,9 @@ namespace MockServer.Client.Net.Models
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
+        public string ToJson()
         {
-            return JsonSerializer.Serialize(this, JsonSerializerOptionsContants.Default);
+            return JsonSerializer.Serialize(this, JsonSerializerOptionsConstants.Default);
         }
 
         /// <summary>

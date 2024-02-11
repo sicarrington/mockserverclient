@@ -11,7 +11,7 @@ namespace MockServer.Client.Net.Models
     /// HttpResponse
     /// </summary>
     [DataContract]
-    public partial class HttpResponse : IEquatable<HttpResponse>, IValidatableObject
+    public sealed partial class HttpResponse : IEquatable<HttpResponse>, IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpResponse" /> class.
@@ -99,9 +99,9 @@ namespace MockServer.Client.Net.Models
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
+        public string ToJson()
         {
-            return JsonSerializer.Serialize(this, JsonSerializerOptionsContants.Default);
+            return JsonSerializer.Serialize(this, JsonSerializerOptionsConstants.Default);
         }
 
         /// <summary>

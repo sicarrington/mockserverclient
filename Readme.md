@@ -17,11 +17,13 @@ Setup a mock using the library in c# code
 using (var httpClient = new HttpClient{ BaseAddress = new Uri("http://localhost:1080/")})
 {
     var mockServerClient = new MockServerClient(httpClient);
+    
+    var expectedRequest = new RequestBuilder().WithPath("/helloworld").Create()
 
     await mockServerClient.SetExpectations(
         new Expectation
         {
-            HttpRequest = new RequestBuilder().WithPath("/helloworld").Create(),
+            HttpRequest = expectedRequest,
             HttpResponse = new ResponseBuilder().WithStatusCode(200).Create()
         });
 }
@@ -30,4 +32,10 @@ using (var httpClient = new HttpClient{ BaseAddress = new Uri("http://localhost:
 Test the mock
 ```bash
 curl -I localhost:1080/helloworld
+```
+
+Verify the expected request was made
+
+```csharp
+await mockServerClient.Verify(expectedRequest.Create(), VerificationTimes.Once)
 ```

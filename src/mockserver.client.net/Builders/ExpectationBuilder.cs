@@ -6,22 +6,16 @@ namespace MockServer.Client.Net.Builders
 {
     public class ExpectationBuilder
     {
-        private readonly MockServerClient _mockServerClient;
-        private RequestBuilder _requestBuilder;
-        internal RequestBuilder RequestBuilder
-        {
-            get
-            {
-                return _requestBuilder;
-            }
-        }
+        private readonly IMockServerClient _mockServerClient;
+        private readonly RequestBuilder _requestBuilder;
+        internal RequestBuilder RequestBuilder => _requestBuilder;
 
-        private ExpectationBuilder(MockServerClient mockServerClient, RequestBuilder httpRequest)
+        private ExpectationBuilder(IMockServerClient mockServerClient, RequestBuilder httpRequest)
         {
             _mockServerClient = mockServerClient;
             _requestBuilder = httpRequest;
         }
-        internal static ExpectationBuilder When(MockServerClient mockServerClient, RequestBuilder requestBuilder)
+        internal static ExpectationBuilder When(IMockServerClient mockServerClient, RequestBuilder requestBuilder)
         {
             if (mockServerClient == null)
             {

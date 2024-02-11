@@ -10,12 +10,13 @@ namespace MockServer.Client.Net.Tests.Unit.BuilderTests.ExpectationBuilderTests
 {
     public class RespondTests
     {
-        Mock<MockServerClient> _mockServerClient;
-        RequestBuilder _requestBuilder;
-        ExpectationBuilder _expectationBuilder;
+        private readonly Mock<IMockServerClient> _mockServerClient;
+        private readonly RequestBuilder _requestBuilder;
+        private readonly ExpectationBuilder _expectationBuilder;
+        
         public RespondTests()
         {
-            _mockServerClient = new Mock<MockServerClient>(new HttpClient());
+            _mockServerClient = new Mock<IMockServerClient>();
             _requestBuilder = new RequestBuilder();
 
             _expectationBuilder = ExpectationBuilder.When(_mockServerClient.Object, _requestBuilder);

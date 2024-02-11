@@ -7,20 +7,28 @@ using System.Threading.Tasks;
 
 namespace MockServer.Client.Net
 {
-    public class MockServerClient
+    public interface IMockServerClient
+    {
+        Task SetExpectations(Expectation expectations);
+        ExpectationBuilder When(RequestBuilder requestBuilder);
+        Task<bool> Verify(HttpRequest request, VerificationTimes verificationTimes);
+    }
+    
+    public sealed class MockServerClient : IMockServerClient
     {
         private readonly HttpClient _httpClient;
+        
         public MockServerClient(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
 
-        public virtual async Task SetExpectations(Expectation expectations)
+        public async Task SetExpectations(Expectation expectations)
         {
             var httpRequestMessage = new HttpRequestMessage(HttpMethod.Put, "/expectation")
             {
                 Content = new StringContent(
-                JsonSerializer.Serialize(expectations, JsonSerializerOptionsContants.Default),
+                JsonSerializer.Serialize(expectations, JsonSerializerOptionsConstants.Default),
                 Encoding.UTF8,
                 "application/json"
             )
@@ -37,7 +45,7 @@ namespace MockServer.Client.Net
             var verification = new Verification(request, verificationTimes);
             var httpRequestMessage = new HttpRequestMessage(HttpMethod.Put, "/verify");
             httpRequestMessage.Content = new StringContent(
-                JsonSerializer.Serialize(verification, JsonSerializerOptionsContants.Default),
+                JsonSerializer.Serialize(verification, JsonSerializerOptionsConstants.Default),
                 Encoding.UTF8,
                 "application/json"
             );
