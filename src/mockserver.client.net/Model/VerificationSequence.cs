@@ -21,7 +21,7 @@ namespace MockServer.Client.Net.Models
     /// VerificationSequence
     /// </summary>
     [DataContract]
-    public partial class VerificationSequence : IEquatable<VerificationSequence>, IValidatableObject
+    public sealed partial class VerificationSequence : IEquatable<VerificationSequence>, IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="VerificationSequence" /> class.
@@ -55,9 +55,9 @@ namespace MockServer.Client.Net.Models
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
+        public string ToJson()
         {
-            return JsonSerializer.Serialize(this, JsonSerializerOptionsContants.Default);
+            return JsonSerializer.Serialize(this, JsonSerializerOptionsConstants.Default);
         }
 
         /// <summary>

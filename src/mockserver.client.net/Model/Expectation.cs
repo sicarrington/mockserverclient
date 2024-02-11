@@ -21,7 +21,7 @@ namespace MockServer.Client.Net.Models
     /// Expectation
     /// </summary>
     [DataContract]
-    public partial class Expectation : IEquatable<Expectation>, IValidatableObject
+    public sealed partial class Expectation : IEquatable<Expectation>, IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Expectation" /> class.
@@ -176,9 +176,9 @@ namespace MockServer.Client.Net.Models
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
+        public string ToJson()
         {
-            return JsonSerializer.Serialize(this, JsonSerializerOptionsContants.Default);
+            return JsonSerializer.Serialize(this, JsonSerializerOptionsConstants.Default);
         }
 
         /// <summary>

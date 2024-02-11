@@ -20,7 +20,7 @@ namespace MockServer.Client.Net.Models
     /// HttpOverrideForwardedRequest
     /// </summary>
     [DataContract]
-    public partial class HttpOverrideForwardedRequest : IEquatable<HttpOverrideForwardedRequest>, IValidatableObject
+    public sealed partial class HttpOverrideForwardedRequest : IEquatable<HttpOverrideForwardedRequest>, IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpOverrideForwardedRequest" /> class.
@@ -63,9 +63,9 @@ namespace MockServer.Client.Net.Models
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
+        public string ToJson()
         {
-            return JsonSerializer.Serialize(this, JsonSerializerOptionsContants.Default);
+            return JsonSerializer.Serialize(this, JsonSerializerOptionsConstants.Default);
         }
 
         /// <summary>

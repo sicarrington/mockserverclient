@@ -31,7 +31,7 @@ namespace MockServer.Client.Net.Tests.Integration
                 httpRequestMessage.Content = new StringContent(requestBody, System.Text.Encoding.UTF8);
                 var response = await httpClient.SendAsync(httpRequestMessage);
 
-                var result = await mockServerClient.Verify(expectedRequest.Create(), new VerificationTimes(1, 1));
+                var result = await mockServerClient.Verify(expectedRequest.Create(), VerificationTimes.Once);
                 Assert.True(result);
             }
         }

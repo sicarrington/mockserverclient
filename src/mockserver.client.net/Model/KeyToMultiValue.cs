@@ -20,7 +20,7 @@ namespace MockServer.Client.Net.Models
     /// KeyToMultiValue
     /// </summary>
     [DataContract]
-    public partial class KeyToMultiValue : IEquatable<KeyToMultiValue>, IValidatableObject
+    public abstract partial class KeyToMultiValue : IEquatable<KeyToMultiValue>, IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyToMultiValue" /> class.
@@ -47,7 +47,7 @@ namespace MockServer.Client.Net.Models
         /// <returns>JSON string presentation of the object</returns>
         public virtual string ToJson()
         {
-            return JsonSerializer.Serialize(this, JsonSerializerOptionsContants.Default);
+            return JsonSerializer.Serialize(this, JsonSerializerOptionsConstants.Default);
         }
 
         /// <summary>

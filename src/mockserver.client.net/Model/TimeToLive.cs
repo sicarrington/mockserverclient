@@ -20,7 +20,7 @@ namespace MockServer.Client.Net.Models
     /// TimeToLive
     /// </summary>
     [DataContract]
-    public partial class TimeToLive : IEquatable<TimeToLive>, IValidatableObject
+    public sealed partial class TimeToLive : IEquatable<TimeToLive>, IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TimeToLive" /> class.
@@ -72,9 +72,9 @@ namespace MockServer.Client.Net.Models
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
+        public string ToJson()
         {
-            return JsonSerializer.Serialize(this, JsonSerializerOptionsContants.Default);
+            return JsonSerializer.Serialize(this, JsonSerializerOptionsConstants.Default);
         }
 
         /// <summary>

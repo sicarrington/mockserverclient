@@ -6,7 +6,8 @@ namespace MockServer.Client.Net.Tests.Unit.BuilderTests.RequestBuilderTests
 {
     public class WithMethodTests
     {
-        RequestBuilder _requestBuilder;
+        private readonly RequestBuilder _requestBuilder;
+        
         public WithMethodTests()
         {
             _requestBuilder = new RequestBuilder();

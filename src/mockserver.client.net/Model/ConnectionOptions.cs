@@ -20,7 +20,7 @@ namespace MockServer.Client.Net.Models
     /// ConnectionOptions
     /// </summary>
     [DataContract]
-    public partial class ConnectionOptions : IEquatable<ConnectionOptions>, IValidatableObject
+    public sealed partial class ConnectionOptions : IEquatable<ConnectionOptions>, IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ConnectionOptions" /> class.
@@ -90,9 +90,9 @@ namespace MockServer.Client.Net.Models
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
+        public string ToJson()
         {
-            return JsonSerializer.Serialize(this, JsonSerializerOptionsContants.Default);
+            return JsonSerializer.Serialize(this, JsonSerializerOptionsConstants.Default);
         }
 
         /// <summary>

@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace MockServer.Client.Net.Unit
+namespace MockServer.Client.Net.Tests.Unit
 {
     public class ApiTests
     {
