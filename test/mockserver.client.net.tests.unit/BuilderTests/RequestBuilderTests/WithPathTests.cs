@@ -14,7 +14,7 @@ namespace MockServer.Client.Net.Tests.Unit.BuilderTests.RequestBuilderTests
         [Fact]
         public void GivenWithPath_WhenPathProvidedIsEmpty_ThenExceptionIsThrown()
         {
-            Assert.Throws<ArgumentNullException>(() => { new RequestBuilder().WithPath(null); });
+            Assert.Throws<ArgumentNullException>(() => { new RequestBuilder().WithPath(string.Empty); });
         }
         [Fact]
         public void GivenWithPath_WhenPathProvidedIsNotEmpty_ThenPathIsSetAsExpected()

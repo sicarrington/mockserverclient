@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace MockServer.Client.Net.Builders
 {
-    public class ExpectationBuilder
+    public sealed  class ExpectationBuilder
     {
         private readonly IMockServerClient _mockServerClient;
         private readonly RequestBuilder _requestBuilder;

@@ -33,11 +33,18 @@ namespace MockServer.Client.Net.Models
         /// <param name="method">method.</param>
         /// <param name="secure">secure.</param>
         /// <param name="keepAlive">keepAlive.</param>
-        public HttpRequest(string body = default(string), KeyToMultiValue headers = default(KeyToMultiValue), KeyToValue cookies = default(KeyToValue), KeyToMultiValue queryStringParameters = default(KeyToMultiValue), string path = default(string), string method = default(string), bool? secure = default(bool?), bool? keepAlive = default(bool?))
+        public HttpRequest(string body = default(string), 
+            IDictionary<string, IEnumerable<string>> headers = null, 
+            IDictionary<string,string> cookies = null, 
+            KeyToMultiValue queryStringParameters = default(KeyToMultiValue), 
+            string path = default(string), 
+            string method = default(string), 
+            bool? secure = default(bool?), 
+            bool? keepAlive = default(bool?))
         {
             this.Body = body;
-            this.Headers = headers;
-            this.Cookies = cookies;
+            this.Headers = headers ?? new Dictionary<string, IEnumerable<string>>();
+            this.Cookies = cookies ?? new Dictionary<string, string>();
             this.QueryStringParameters = queryStringParameters;
             this.Path = path;
             this.Method = method;
@@ -55,13 +62,13 @@ namespace MockServer.Client.Net.Models
         /// Gets or Sets Headers
         /// </summary>
         [DataMember(Name = "headers", EmitDefaultValue = false)]
-        public KeyToMultiValue Headers { get; set; }
+        public IDictionary<string, IEnumerable<string>> Headers { get; set; }
 
         /// <summary>
         /// Gets or Sets Cookies
         /// </summary>
         [DataMember(Name = "cookies", EmitDefaultValue = false)]
-        public KeyToValue Cookies { get; set; }
+        public IDictionary<string, string> Cookies { get; set; }
 
         /// <summary>
         /// Gets or Sets QueryStringParameters

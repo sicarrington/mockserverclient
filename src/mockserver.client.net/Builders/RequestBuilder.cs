@@ -1,5 +1,6 @@
 using MockServer.Client.Net.Models;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 
 namespace MockServer.Client.Net.Builders
@@ -7,6 +8,7 @@ namespace MockServer.Client.Net.Builders
     public sealed class RequestBuilder
     {
         private readonly HttpRequest _httpRequest;
+        
         private RequestBuilder(HttpRequest request)
         {
             _httpRequest = request;
@@ -38,6 +40,34 @@ namespace MockServer.Client.Net.Builders
             }
             _httpRequest.Body = requestBody;
             return this;
+        }
+
+        public RequestBuilder WithHeaders(IDictionary<string, IEnumerable<string>> headers)
+        {
+            if (headers == null)
+            {
+                throw new ArgumentNullException(nameof(headers));
+            }
+
+            _httpRequest.Headers = headers;
+            return this;
+        }
+
+        public RequestBuilder WithCookies(IDictionary<string, string> cookies)
+        {
+            if (cookies == null)
+            {
+                throw new ArgumentNullException(nameof(cookies));
+            }
+
+            _httpRequest.Cookies = cookies;
+            return this;
+        }
+
+        public RequestBuilder WithQueryStringParameters(
+            QueryStringExpectationBuilder queryStringExpectationBuilder)
+        {
+            throw new NotImplementedException();
         }
         
         public HttpRequest Create()
