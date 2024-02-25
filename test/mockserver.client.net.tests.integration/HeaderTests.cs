@@ -23,7 +23,7 @@ public class HeaderTests
                     .WithPath(path)
                     .WithMethod(HttpMethod.Post)
                     .WithHeaders(new Dictionary<string, IEnumerable<string>>{{"HeaderOne", new[]{"ValueOne"}}}))
-                .Respond(ResponseBuilder.Build().WithStatusCode(200));
+                .Respond(responseBuilder => responseBuilder.WithStatusCode(200));
 
             var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, path);
             httpRequestMessage.Content = new StringContent(requestBody, System.Text.Encoding.UTF8);
@@ -49,7 +49,7 @@ public class HeaderTests
                     .WithPath(path)
                     .WithMethod(HttpMethod.Post)
                     .WithHeaders(new Dictionary<string, IEnumerable<string>>{{"HeaderOne", new[]{"ValueOne"}}}))
-                .Respond(ResponseBuilder.Build().WithStatusCode(200));
+                .Respond(responseBuilder => responseBuilder.WithStatusCode(200));
 
             var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, path);
             httpRequestMessage.Content = new StringContent(requestBody, System.Text.Encoding.UTF8);
