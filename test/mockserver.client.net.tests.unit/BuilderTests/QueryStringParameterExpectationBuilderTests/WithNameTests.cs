@@ -9,7 +9,7 @@ public class WithNameTests
     [Fact]
     public void WhenNameIsEmpty_ThenErrorOnCreate()
     {
-        var sut = new QueryStringParameterExpectationBuilder()
+        var sut = QueryStringParameterExpectationBuilder.Build()
             .WithName(string.Empty);
         Assert.Throws<InvalidOperationException>(() => sut.Create());
     }
@@ -17,7 +17,7 @@ public class WithNameTests
     [Fact]
     public void WhenNameIsNull_ThenErrorOnCreate()
     {
-        var sut = new QueryStringParameterExpectationBuilder();
+        var sut = QueryStringParameterExpectationBuilder.Build();
         Assert.Throws<InvalidOperationException>(() => sut.Create());
     }
 
@@ -25,7 +25,7 @@ public class WithNameTests
     public void WhenNameIsSetToSimpleString_ThenNameIsMappedCorrectly()
     {
         var expectedName = "TestName";
-        var sut = new QueryStringParameterExpectationBuilder()
+        var sut = QueryStringParameterExpectationBuilder.Build()
             .WithName(expectedName);
         
         Assert.Equal(expectedName, sut.Create().Key);
@@ -35,7 +35,7 @@ public class WithNameTests
     public void WhenNameIsSetToRegexString_ThenNameIsMappedCorrectly()
     {
         var expectedName = "[A-Z0-9-]+$";
-        var sut = new QueryStringParameterExpectationBuilder()
+        var sut = QueryStringParameterExpectationBuilder.Build()
             .WithName(expectedName);
         
         Assert.Equal(expectedName, sut.Create().Key);

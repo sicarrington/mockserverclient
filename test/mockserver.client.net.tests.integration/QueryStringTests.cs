@@ -18,7 +18,7 @@ public class QueryStringTests
         httpClient.BaseAddress = new Uri("http://localhost:1080/");
 
         new MockServerClient(httpClient)
-            .When(new RequestBuilder()
+            .When(RequestBuilder.Build()
                 .WithMethod(HttpMethod.Get)
                 .WithPath(path)
                 .WithQueryStringParameters(QueryStringExpectationBuilder
@@ -29,7 +29,7 @@ public class QueryStringTests
                         .WithValue("ParamterOneValue"))
                 )
             )
-            .Respond(new ResponseBuilder().WithStatusCode(200));
+            .Respond(ResponseBuilder.Build().WithStatusCode(200));
 
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{path}?ParameterOne=ParamterOneValue");
         var response = await httpClient.SendAsync(httpRequestMessage);
@@ -45,7 +45,7 @@ public class QueryStringTests
         httpClient.BaseAddress = new Uri("http://localhost:1080/");
 
         new MockServerClient(httpClient)
-            .When(new RequestBuilder()
+            .When(RequestBuilder.Build()
                 .WithMethod(HttpMethod.Get)
                 .WithPath(path)
                 .WithQueryStringParameters(QueryStringExpectationBuilder
@@ -56,7 +56,7 @@ public class QueryStringTests
                         .WithValue(SchemaValue.Uuid()))
                 )
             )
-            .Respond(new ResponseBuilder().WithStatusCode(200));
+            .Respond(ResponseBuilder.Build().WithStatusCode(200));
 
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{path}?Test2ParameterOne={Guid.NewGuid()}");
         var response = await httpClient.SendAsync(httpRequestMessage);
@@ -72,7 +72,7 @@ public class QueryStringTests
         httpClient.BaseAddress = new Uri("http://localhost:1080/");
 
         new MockServerClient(httpClient)
-            .When(new RequestBuilder()
+            .When(RequestBuilder.Build()
                 .WithMethod(HttpMethod.Get)
                 .WithPath(path)
                 .WithQueryStringParameters(QueryStringExpectationBuilder
@@ -83,7 +83,7 @@ public class QueryStringTests
                         .WithValue(SchemaValue.Integer()))
                 )
             )
-            .Respond(new ResponseBuilder().WithStatusCode(200));
+            .Respond(ResponseBuilder.Build().WithStatusCode(200));
 
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{path}?Test3ParameterOne={new Random().Next()}");
         var response = await httpClient.SendAsync(httpRequestMessage);
@@ -99,7 +99,7 @@ public class QueryStringTests
         httpClient.BaseAddress = new Uri("http://localhost:1080/");
 
         new MockServerClient(httpClient)
-            .When(new RequestBuilder()
+            .When(RequestBuilder.Build()
                 .WithMethod(HttpMethod.Get)
                 .WithPath(path)
                 .WithQueryStringParameters(QueryStringExpectationBuilder
@@ -110,7 +110,7 @@ public class QueryStringTests
                         .WithValue(SchemaValue.StringWithPattern("^S_[0-9]+$")))
                 )
             )
-            .Respond(new ResponseBuilder().WithStatusCode(200));
+            .Respond(ResponseBuilder.Build().WithStatusCode(200));
 
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{path}?Test4ParameterOne=S_{new Random().Next()}");
         var response = await httpClient.SendAsync(httpRequestMessage);
@@ -126,7 +126,7 @@ public class QueryStringTests
         httpClient.BaseAddress = new Uri("http://localhost:1080/");
 
         new MockServerClient(httpClient)
-            .When(new RequestBuilder()
+            .When(RequestBuilder.Build()
                 .WithMethod(HttpMethod.Get)
                 .WithPath(path)
                 .WithQueryStringParameters(QueryStringExpectationBuilder
@@ -141,7 +141,7 @@ public class QueryStringTests
                         .WithValue(SchemaValue.Uuid()))
                 )
             )
-            .Respond(new ResponseBuilder().WithStatusCode(200));
+            .Respond(ResponseBuilder.Build().WithStatusCode(200));
 
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{path}?Test5ParameterOne=T_{new Random().Next()}&Test5ParameterTwo={Guid.NewGuid()}");
         var response = await httpClient.SendAsync(httpRequestMessage);
@@ -159,7 +159,7 @@ public class QueryStringTests
         httpClient.BaseAddress = new Uri("http://localhost:1080/");
 
         new MockServerClient(httpClient)
-            .When(new RequestBuilder()
+            .When(RequestBuilder.Build()
                 .WithMethod(HttpMethod.Get)
                 .WithPath(path)
                 .WithQueryStringParameters(QueryStringExpectationBuilder
@@ -170,7 +170,7 @@ public class QueryStringTests
                         .WithValue(SchemaValue.Integer()))
                 )
             )
-            .Respond(new ResponseBuilder().WithStatusCode(200));
+            .Respond(ResponseBuilder.Build().WithStatusCode(200));
 
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{path}?Test6ParameterOne={new Random().Next()}");
         var response = await httpClient.SendAsync(httpRequestMessage);
@@ -188,7 +188,7 @@ public class QueryStringTests
         httpClient.BaseAddress = new Uri("http://localhost:1080/");
 
         new MockServerClient(httpClient)
-            .When(new RequestBuilder()
+            .When(RequestBuilder.Build()
                 .WithMethod(HttpMethod.Get)
                 .WithPath(path)
                 .WithQueryStringParameters(QueryStringExpectationBuilder
@@ -199,7 +199,7 @@ public class QueryStringTests
                         .WithValue(SchemaValue.Integer()))
                 )
             )
-            .Respond(new ResponseBuilder().WithStatusCode(200));
+            .Respond(ResponseBuilder.Build().WithStatusCode(200));
 
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{path}");
         var response = await httpClient.SendAsync(httpRequestMessage);
@@ -217,7 +217,7 @@ public class QueryStringTests
         httpClient.BaseAddress = new Uri("http://localhost:1080/");
 
         new MockServerClient(httpClient)
-            .When(new RequestBuilder()
+            .When(RequestBuilder.Build()
                 .WithMethod(HttpMethod.Get)
                 .WithPath(path)
                 .WithQueryStringParameters(QueryStringExpectationBuilder
@@ -228,7 +228,7 @@ public class QueryStringTests
                         .WithValue(SchemaValue.Integer()))
                 )
             )
-            .Respond(new ResponseBuilder().WithStatusCode(200));
+            .Respond(ResponseBuilder.Build().WithStatusCode(200));
 
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{path}?Test8ParameterOne={Guid.NewGuid()}");
         var response = await httpClient.SendAsync(httpRequestMessage);

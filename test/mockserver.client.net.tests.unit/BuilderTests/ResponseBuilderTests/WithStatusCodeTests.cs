@@ -10,7 +10,7 @@ namespace MockServer.Client.Net.Tests.Unit.BuilderTests.ResponseBuilderTests
         [InlineData(200)]
         public void GivenWithStatusCode_WhenStatusCodeIsPassed_ThenStatusCodeIsSetAgainstResponseBuilt(int expectedStatusCode)
         {
-            var responseBuilder = new ResponseBuilder().WithStatusCode(expectedStatusCode);
+            var responseBuilder = ResponseBuilder.Build().WithStatusCode(expectedStatusCode);
 
             Assert.Equal(expectedStatusCode, responseBuilder.Create().StatusCode);
         }

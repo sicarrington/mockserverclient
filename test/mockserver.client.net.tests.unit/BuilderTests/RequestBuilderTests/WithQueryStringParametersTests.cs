@@ -19,7 +19,7 @@ public class WithQueryStringParametersTests
         queryStringExpectationBuilder.Setup(x => x.Create())
             .Returns(queryStringParameters);
 
-        var result = new RequestBuilder().WithQueryStringParameters(queryStringExpectationBuilder.Object);
+        var result = RequestBuilder.Build().WithQueryStringParameters(queryStringExpectationBuilder.Object);
         Assert.Equal(queryStringParameters, result.Create().QueryStringParameters);
     }
 }

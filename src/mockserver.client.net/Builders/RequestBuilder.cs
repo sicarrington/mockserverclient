@@ -5,17 +5,6 @@ using System.Net.Http;
 
 namespace MockServer.Client.Net.Builders
 {
-    public interface IRequestBuilder
-    {
-        IRequestBuilder WithPath(string path);
-        IRequestBuilder WithMethod(HttpMethod method);
-        IRequestBuilder WithBody(string requestBody);
-        IRequestBuilder WithHeaders(IDictionary<string, IEnumerable<string>> headers);
-        IRequestBuilder WithCookies(IDictionary<string, string> cookies);
-        IRequestBuilder WithQueryStringParameters(IQueryStringExpectationBuilder queryStringExpectationBuilder);
-        HttpRequest Create();
-    }
-    
     public sealed class RequestBuilder : IRequestBuilder
     {
         private readonly HttpRequest _httpRequest;
@@ -24,9 +13,10 @@ namespace MockServer.Client.Net.Builders
         {
             _httpRequest = request;
         }
-        public RequestBuilder()
+
+        public static IRequestBuilder Build()
         {
-            _httpRequest = new HttpRequest();
+            return new RequestBuilder(new HttpRequest());
         }
 
         public IRequestBuilder WithPath(string path)

@@ -1,26 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using MockServer.Client.Net.Models;
 
 namespace MockServer.Client.Net.Builders
 {
-    public interface IQueryStringParameterExpectationBuilder
-    {
-        IQueryStringParameterExpectationBuilder WithName(string exactNameOrRegex);
-        IQueryStringParameterExpectationBuilder WithValue(SchemaValue schemaValue);
-        IQueryStringParameterExpectationBuilder WithValue(string exactValueOrRegex);
-        KeyValuePair<string, IEnumerable<object>> Create();
-    }
-    
     public class QueryStringParameterExpectationBuilder : IQueryStringParameterExpectationBuilder
     {
         private string Name { get; set; }
 
         private IList<object> Values { get; set; } = new List<object>();
 
-        internal QueryStringParameterExpectationBuilder()
+        private QueryStringParameterExpectationBuilder()
         {
             
         }

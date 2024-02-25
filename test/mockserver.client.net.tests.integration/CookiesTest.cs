@@ -20,11 +20,11 @@ public class CookiesTest
         httpClient.BaseAddress = new Uri("http://localhost:1080/");
 
         new MockServerClient(httpClient)
-            .When(new RequestBuilder()
+            .When(RequestBuilder.Build()
                 .WithPath(path)
                 .WithMethod(HttpMethod.Get)
                 .WithCookies(new Dictionary<string, string>{{"CookieOne", "CookieValueOne"}}))
-            .Respond(new ResponseBuilder().WithStatusCode(200));
+            .Respond(ResponseBuilder.Build().WithStatusCode(200));
 
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, path);
         cookieContainer.Add(httpClient.BaseAddress, new Cookie("CookieOne", "CookieValueOne"));
@@ -44,11 +44,11 @@ public class CookiesTest
         httpClient.BaseAddress = new Uri("http://localhost:1080/");
 
         new MockServerClient(httpClient)
-            .When(new RequestBuilder()
+            .When(RequestBuilder.Build()
                 .WithPath(path)
                 .WithMethod(HttpMethod.Get)
                 .WithCookies(new Dictionary<string, string>{{"CookieOneFail", "CookieValueOne"}}))
-            .Respond(new ResponseBuilder().WithStatusCode(200));
+            .Respond(ResponseBuilder.Build().WithStatusCode(200));
 
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, path);
         cookieContainer.Add(httpClient.BaseAddress, new Cookie("CookieOne", "CookieValueOne"));

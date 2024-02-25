@@ -19,11 +19,11 @@ public class HeaderTests
             httpClient.BaseAddress = new Uri("http://localhost:1080/");
 
             new MockServerClient(httpClient)
-                .When(new RequestBuilder()
+                .When(RequestBuilder.Build()
                     .WithPath(path)
                     .WithMethod(HttpMethod.Post)
                     .WithHeaders(new Dictionary<string, IEnumerable<string>>{{"HeaderOne", new[]{"ValueOne"}}}))
-                .Respond(new ResponseBuilder().WithStatusCode(200));
+                .Respond(ResponseBuilder.Build().WithStatusCode(200));
 
             var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, path);
             httpRequestMessage.Content = new StringContent(requestBody, System.Text.Encoding.UTF8);
@@ -45,11 +45,11 @@ public class HeaderTests
             httpClient.BaseAddress = new Uri("http://localhost:1080/");
 
             new MockServerClient(httpClient)
-                .When(new RequestBuilder()
+                .When(RequestBuilder.Build()
                     .WithPath(path)
                     .WithMethod(HttpMethod.Post)
                     .WithHeaders(new Dictionary<string, IEnumerable<string>>{{"HeaderOne", new[]{"ValueOne"}}}))
-                .Respond(new ResponseBuilder().WithStatusCode(200));
+                .Respond(ResponseBuilder.Build().WithStatusCode(200));
 
             var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, path);
             httpRequestMessage.Content = new StringContent(requestBody, System.Text.Encoding.UTF8);

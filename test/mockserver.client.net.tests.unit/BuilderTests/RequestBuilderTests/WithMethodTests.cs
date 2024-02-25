@@ -6,11 +6,11 @@ namespace MockServer.Client.Net.Tests.Unit.BuilderTests.RequestBuilderTests
 {
     public class WithMethodTests
     {
-        private readonly RequestBuilder _requestBuilder;
+        private readonly IRequestBuilder _requestBuilder;
         
         public WithMethodTests()
         {
-            _requestBuilder = new RequestBuilder();
+            _requestBuilder = RequestBuilder.Build();
         }
         [Fact]
         public void GivenWithMethodIsCalled_WhenMethodDeleteIsPassed_MethodIsMappedAsExpected()
