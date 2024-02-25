@@ -4,11 +4,6 @@ using System.Threading.Tasks;
 
 namespace MockServer.Client.Net.Builders
 {
-    public interface IExpectationBuilder
-    {
-        Expectation Respond(IResponseBuilder responseBuilder);
-    }
-
     public sealed  class ExpectationBuilder : IExpectationBuilder
     {
         private readonly IMockServerClient _mockServerClient;
