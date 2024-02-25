@@ -10,7 +10,7 @@ namespace MockServer.Client.Net
     public interface IMockServerClient
     {
         Task SetExpectations(Expectation expectations);
-        ExpectationBuilder When(RequestBuilder requestBuilder);
+        IExpectationBuilder When(IRequestBuilder requestBuilder);
         Task<bool> Verify(HttpRequest request, VerificationTimes verificationTimes);
     }
     
@@ -36,7 +36,7 @@ namespace MockServer.Client.Net
 
             _ = await _httpClient.SendAsync(httpRequestMessage);
         }
-        public ExpectationBuilder When(RequestBuilder requestBuilder)
+        public IExpectationBuilder When(IRequestBuilder requestBuilder)
         {
             return ExpectationBuilder.When(this, requestBuilder);
         }

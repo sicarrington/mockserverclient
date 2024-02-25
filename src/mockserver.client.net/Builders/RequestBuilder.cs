@@ -5,7 +5,18 @@ using System.Net.Http;
 
 namespace MockServer.Client.Net.Builders
 {
-    public sealed class RequestBuilder
+    public interface IRequestBuilder
+    {
+        IRequestBuilder WithPath(string path);
+        IRequestBuilder WithMethod(HttpMethod method);
+        IRequestBuilder WithBody(string requestBody);
+        IRequestBuilder WithHeaders(IDictionary<string, IEnumerable<string>> headers);
+        IRequestBuilder WithCookies(IDictionary<string, string> cookies);
+        IRequestBuilder WithQueryStringParameters(IQueryStringExpectationBuilder queryStringExpectationBuilder);
+        HttpRequest Create();
+    }
+    
+    public sealed class RequestBuilder : IRequestBuilder
     {
         private readonly HttpRequest _httpRequest;
         
@@ -18,7 +29,7 @@ namespace MockServer.Client.Net.Builders
             _httpRequest = new HttpRequest();
         }
 
-        public RequestBuilder WithPath(string path)
+        public IRequestBuilder WithPath(string path)
         {
             if (string.IsNullOrWhiteSpace(path))
             {
@@ -27,12 +38,12 @@ namespace MockServer.Client.Net.Builders
             _httpRequest.Path = path;
             return this;
         }
-        public RequestBuilder WithMethod(HttpMethod method)
+        public IRequestBuilder WithMethod(HttpMethod method)
         {
             _httpRequest.Method = method.Method;
             return this;
         }
-        public RequestBuilder WithBody(string requestBody)
+        public IRequestBuilder WithBody(string requestBody)
         {
             if (requestBody == null)
             {
@@ -42,7 +53,7 @@ namespace MockServer.Client.Net.Builders
             return this;
         }
 
-        public RequestBuilder WithHeaders(IDictionary<string, IEnumerable<string>> headers)
+        public IRequestBuilder WithHeaders(IDictionary<string, IEnumerable<string>> headers)
         {
             if (headers == null)
             {
@@ -53,7 +64,7 @@ namespace MockServer.Client.Net.Builders
             return this;
         }
 
-        public RequestBuilder WithCookies(IDictionary<string, string> cookies)
+        public IRequestBuilder WithCookies(IDictionary<string, string> cookies)
         {
             if (cookies == null)
             {
@@ -64,10 +75,15 @@ namespace MockServer.Client.Net.Builders
             return this;
         }
 
-        public RequestBuilder WithQueryStringParameters(
-            QueryStringExpectationBuilder queryStringExpectationBuilder)
+        public IRequestBuilder WithQueryStringParameters(IQueryStringExpectationBuilder queryStringExpectationBuilder)
         {
-            throw new NotImplementedException();
+            if (queryStringExpectationBuilder == null)
+            {
+                throw new ArgumentNullException(nameof(queryStringExpectationBuilder));
+            }
+            
+            _httpRequest.QueryStringParameters = queryStringExpectationBuilder.Create();
+            return this;
         }
         
         public HttpRequest Create()

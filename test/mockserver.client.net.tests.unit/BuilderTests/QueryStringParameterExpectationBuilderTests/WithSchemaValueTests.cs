@@ -9,11 +9,11 @@ namespace MockServer.Client.Net.Tests.Unit.BuilderTests.QueryStringParameterExpe
 
 public class WithSchemaValueTests
 {
-    private QueryStringParameterExpectationBuilder sut;
+    private IQueryStringParameterExpectationBuilder sut;
 
     public WithSchemaValueTests()
     {
-        sut = new QueryStringParameterExpectationBuilder()
+        sut = QueryStringParameterExpectationBuilder.Build()
             .WithName("AParameterName");
     }
     
@@ -22,19 +22,14 @@ public class WithSchemaValueTests
     {
         sut.WithValue(SchemaValue.Uuid());
 
-        var expectedValueObject = new
-        {
-            schema = new
-            {
-                type = "string",
-                format = "uuid"
-            }
-        };
-
-        var expectedValue = JsonSerializer.Serialize(expectedValueObject,
-            new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull });
+        var result = sut.Create();
         
-        Assert.Equal(expectedValue, sut.Create().Value.First());
+        Assert.Single(result.Value);
+        Assert.Contains(result.Value, x =>
+            ((dynamic)x).schema is SchemaValue schemaValue && 
+            schemaValue.Type == "string" &&
+            schemaValue.Pattern == null && 
+            schemaValue.Format == "uuid");
     }
     
     [Fact]
@@ -42,18 +37,14 @@ public class WithSchemaValueTests
     {
         sut.WithValue(SchemaValue.Integer());
 
-        var expectedValueObject = new
-        {
-            schema = new
-            {
-                type = "integer",
-            }
-        };
-
-        var expectedValue = JsonSerializer.Serialize(expectedValueObject,
-            new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull });
+        var result = sut.Create();
         
-        Assert.Equal(expectedValue, sut.Create().Value.First());
+        Assert.Single(result.Value);
+        Assert.Contains(result.Value, x =>
+            ((dynamic)x).schema is SchemaValue schemaValue && 
+            schemaValue.Type == "integer" &&
+            schemaValue.Pattern == null && 
+            schemaValue.Format == null);
     }
     
     
@@ -61,20 +52,15 @@ public class WithSchemaValueTests
     public void WhenValueIsStringWiothFormatSchemaValue_ThenValueIsMappedCorrectly()
     {
         sut.WithValue(SchemaValue.StringWithFormat("uuid"));
-
-        var expectedValueObject = new
-        {
-            schema = new
-            {
-                type = "string",
-                format = "uuid"
-            }
-        };
-
-        var expectedValue = JsonSerializer.Serialize(expectedValueObject,
-            new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull });
         
-        Assert.Equal(expectedValue, sut.Create().Value.First());
+        var result = sut.Create();
+        
+        Assert.Single(result.Value);
+        Assert.Contains(result.Value, x =>
+            ((dynamic)x).schema is SchemaValue schemaValue && 
+            schemaValue.Type == "string" &&
+            schemaValue.Pattern == null && 
+            schemaValue.Format == "uuid");
     }
     
     [Fact]
@@ -83,19 +69,14 @@ public class WithSchemaValueTests
         var stringPattern = "^.*gzip.*$";
         sut.WithValue(SchemaValue.StringWithPattern(stringPattern));
 
-        var expectedValueObject = new
-        {
-            schema = new
-            {
-                type = "string",
-                pattern = stringPattern
-            }
-        };
-
-        var expectedValue = JsonSerializer.Serialize(expectedValueObject,
-            new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull });
+        var result = sut.Create();
         
-        Assert.Equal(expectedValue, sut.Create().Value.First());
+        Assert.Single(result.Value);
+        Assert.Contains(result.Value, x =>
+            ((dynamic)x).schema is SchemaValue schemaValue && 
+            schemaValue.Type == "string" &&
+            schemaValue.Pattern == stringPattern && 
+            schemaValue.Format == null);
     }
 
     [Fact]
@@ -107,31 +88,18 @@ public class WithSchemaValueTests
         sut.WithValue(SchemaValue.Integer());
         sut.WithValue(expectedSimpleString);
 
-        var expectedValueOneObject = new
-        {
-            schema = new
-            {
-                type = "string",
-                pattern = stringPattern
-            }
-        };
-        var expectedValueOne = JsonSerializer.Serialize(expectedValueOneObject,
-            new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull });
-        
-        var expectedValueTwoObject = new
-        {
-            schema = new
-            {
-                type = "integer",
-            }
-        };
-        var expectedValueTwo = JsonSerializer.Serialize(expectedValueTwoObject,
-            new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull });
-
         var result = sut.Create();
-        
-        Assert.True(result.Value.Contains(expectedValueOne));
-        Assert.True(result.Value.Contains(expectedValueTwo));
-        Assert.True(result.Value.Contains(expectedSimpleString));
+
+        Assert.Contains(result.Value, x =>
+            ((dynamic)x).schema is SchemaValue schemaValue && 
+            schemaValue.Type == "string" &&
+            schemaValue.Pattern == stringPattern && 
+            schemaValue.Format == null);
+        Assert.Contains(result.Value, x =>
+            ((dynamic)x).schema is SchemaValue schemaValue && 
+            schemaValue.Type == "integer" &&
+            schemaValue.Pattern == null && 
+            schemaValue.Format == null);
+        Assert.Contains(expectedSimpleString, result.Value);
     }
 }

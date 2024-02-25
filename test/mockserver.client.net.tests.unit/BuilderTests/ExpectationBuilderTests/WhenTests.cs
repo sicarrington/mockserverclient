@@ -38,7 +38,7 @@ namespace MockServer.Client.Net.Tests.Unit.BuilderTests.ExpectationBuilderTests
 
                 var result = ExpectationBuilder.When(mockServerClient, requestBuilder);
 
-                Assert.Equal(requestBuilder, result.RequestBuilder);
+                Assert.Equal(requestBuilder, ((ExpectationBuilder)result).RequestBuilder);
 
             }
         }

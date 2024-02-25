@@ -36,7 +36,7 @@ namespace MockServer.Client.Net.Models
         public HttpRequest(string body = default(string), 
             IDictionary<string, IEnumerable<string>> headers = null, 
             IDictionary<string,string> cookies = null, 
-            KeyToMultiValue queryStringParameters = default(KeyToMultiValue), 
+            IDictionary<string, IEnumerable<object>> queryStringParameters = null, 
             string path = default(string), 
             string method = default(string), 
             bool? secure = default(bool?), 
@@ -45,7 +45,7 @@ namespace MockServer.Client.Net.Models
             this.Body = body;
             this.Headers = headers ?? new Dictionary<string, IEnumerable<string>>();
             this.Cookies = cookies ?? new Dictionary<string, string>();
-            this.QueryStringParameters = queryStringParameters;
+            this.QueryStringParameters = queryStringParameters ?? new Dictionary<string, IEnumerable<object>>();
             this.Path = path;
             this.Method = method;
             this.Secure = secure;
@@ -74,7 +74,7 @@ namespace MockServer.Client.Net.Models
         /// Gets or Sets QueryStringParameters
         /// </summary>
         [DataMember(Name = "queryStringParameters", EmitDefaultValue = false)]
-        public KeyToMultiValue QueryStringParameters { get; set; }
+        public IDictionary<string, IEnumerable<object>> QueryStringParameters { get; set; }
 
         /// <summary>
         /// Gets or Sets Path

@@ -4,18 +4,23 @@ using System.Threading.Tasks;
 
 namespace MockServer.Client.Net.Builders
 {
-    public sealed  class ExpectationBuilder
+    public interface IExpectationBuilder
+    {
+        Expectation Respond(IResponseBuilder responseBuilder);
+    }
+
+    public sealed  class ExpectationBuilder : IExpectationBuilder
     {
         private readonly IMockServerClient _mockServerClient;
-        private readonly RequestBuilder _requestBuilder;
-        internal RequestBuilder RequestBuilder => _requestBuilder;
+        private readonly IRequestBuilder _requestBuilder;
+        internal IRequestBuilder RequestBuilder => _requestBuilder;
 
-        private ExpectationBuilder(IMockServerClient mockServerClient, RequestBuilder httpRequest)
+        private ExpectationBuilder(IMockServerClient mockServerClient, IRequestBuilder httpRequest)
         {
             _mockServerClient = mockServerClient;
             _requestBuilder = httpRequest;
         }
-        internal static ExpectationBuilder When(IMockServerClient mockServerClient, RequestBuilder requestBuilder)
+        internal static IExpectationBuilder When(IMockServerClient mockServerClient, IRequestBuilder requestBuilder)
         {
             if (mockServerClient == null)
             {
@@ -28,7 +33,7 @@ namespace MockServer.Client.Net.Builders
             var expectationBuilder = new ExpectationBuilder(mockServerClient, requestBuilder);
             return expectationBuilder;
         }
-        public Expectation Respond(ResponseBuilder responseBuilder)
+        public Expectation Respond(IResponseBuilder responseBuilder)
         {
             if (responseBuilder == null)
             {

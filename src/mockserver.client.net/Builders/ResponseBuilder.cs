@@ -2,7 +2,14 @@ using MockServer.Client.Net.Models;
 
 namespace MockServer.Client.Net.Builders
 {
-    public sealed class ResponseBuilder
+    public interface IResponseBuilder
+    {
+        // IResponseBuilder Build();
+        HttpResponse Create();
+        IResponseBuilder WithStatusCode(int statusCode);
+    }
+    
+    public sealed class ResponseBuilder : IResponseBuilder
     {
         private readonly HttpResponse _httpResponse;
         
@@ -21,7 +28,7 @@ namespace MockServer.Client.Net.Builders
             return _httpResponse;
         }
 
-        public ResponseBuilder WithStatusCode(int statusCode)
+        public IResponseBuilder WithStatusCode(int statusCode)
         {
             _httpResponse.StatusCode = statusCode;
             return this;

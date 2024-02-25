@@ -6,11 +6,11 @@ namespace MockServer.Client.Net.Tests.Unit.BuilderTests.QueryStringParameterExpe
 
 public class WithValueStringTests
 {
-    private QueryStringParameterExpectationBuilder sut;
+    private IQueryStringParameterExpectationBuilder sut;
 
     public WithValueStringTests()
     {
-        sut = new QueryStringParameterExpectationBuilder()
+        sut = QueryStringParameterExpectationBuilder.Build()
             .WithName("AParameterName");
     }
     
@@ -48,9 +48,9 @@ public class WithValueStringTests
         var result = sut.Create();
         
         Assert.Equal(4, result.Value.Count());
-        Assert.True(result.Value.Contains(expectedValueOne));
-        Assert.True(result.Value.Contains(expectedValueTwo));
-        Assert.True(result.Value.Contains(expectedValueThree));
-        Assert.True(result.Value.Contains(expectedValueFour));
+        Assert.Contains(expectedValueOne, result.Value);
+        Assert.Contains(expectedValueTwo, result.Value);
+        Assert.Contains(expectedValueThree, result.Value);
+        Assert.Contains(expectedValueFour, result.Value);
     }
 }

@@ -4,7 +4,6 @@ using System;
 using System.Net.Http;
 using Xunit;
 
-
 namespace MockServer.Client.Net.Tests.Integration
 {
     public class VerificationTests
