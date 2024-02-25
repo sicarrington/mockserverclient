@@ -7,15 +7,15 @@ namespace MockServer.Client.Net.Builders
     public class ExpectationBuilder
     {
         private readonly IMockServerClient _mockServerClient;
-        private readonly RequestBuilder _requestBuilder;
-        internal RequestBuilder RequestBuilder => _requestBuilder;
+        private readonly IRequestBuilder _requestBuilder;
+        internal IRequestBuilder RequestBuilder => _requestBuilder;
 
-        private ExpectationBuilder(IMockServerClient mockServerClient, RequestBuilder httpRequest)
+        private ExpectationBuilder(IMockServerClient mockServerClient, IRequestBuilder httpRequest)
         {
             _mockServerClient = mockServerClient;
             _requestBuilder = httpRequest;
         }
-        internal static ExpectationBuilder When(IMockServerClient mockServerClient, RequestBuilder requestBuilder)
+        internal static ExpectationBuilder When(IMockServerClient mockServerClient, IRequestBuilder requestBuilder)
         {
             if (mockServerClient == null)
             {
@@ -28,17 +28,19 @@ namespace MockServer.Client.Net.Builders
             var expectationBuilder = new ExpectationBuilder(mockServerClient, requestBuilder);
             return expectationBuilder;
         }
-        public Expectation Respond(ResponseBuilder responseBuilder)
-        {
-            if (responseBuilder == null)
-            {
-                throw new ArgumentNullException(nameof(responseBuilder));
-            }
 
+        public Expectation Respond(Func<IResponseBuilder, IResponseBuilder> responseBuilder = null)
+        {
+            var httpRequest = _requestBuilder.Create();
+
+            var response = responseBuilder == null
+                ? ResponseBuilder.Build(httpRequest).Create()
+                : responseBuilder(ResponseBuilder.Build(httpRequest)).Create();
+            
             var expectation = new Expectation
             {
-                HttpRequest = _requestBuilder.Create(),
-                HttpResponse = responseBuilder.Create()
+                HttpRequest = httpRequest,
+                HttpResponse = response
             };
 
             var task = Task.Run(async () => { await _mockServerClient.SetExpectations(expectation); });

@@ -4,19 +4,29 @@ using System.Net.Http;
 
 namespace MockServer.Client.Net.Builders
 {
-    public sealed class RequestBuilder
+    public interface IRequestBuilder
+    {
+        IRequestBuilder WithPath(string path);
+        IRequestBuilder WithMethod(HttpMethod method);
+        IRequestBuilder WithBody(string requestBody);
+        
+        HttpRequest Create();
+    }
+    
+    public sealed class RequestBuilder : IRequestBuilder
     {
         private readonly HttpRequest _httpRequest;
         private RequestBuilder(HttpRequest request)
         {
             _httpRequest = request;
         }
-        public RequestBuilder()
+
+        public static IRequestBuilder Build()
         {
-            _httpRequest = new HttpRequest();
+            return new RequestBuilder(new HttpRequest());
         }
 
-        public RequestBuilder WithPath(string path)
+        public IRequestBuilder WithPath(string path)
         {
             if (string.IsNullOrWhiteSpace(path))
             {
@@ -25,12 +35,12 @@ namespace MockServer.Client.Net.Builders
             _httpRequest.Path = path;
             return this;
         }
-        public RequestBuilder WithMethod(HttpMethod method)
+        public IRequestBuilder WithMethod(HttpMethod method)
         {
             _httpRequest.Method = method.Method;
             return this;
         }
-        public RequestBuilder WithBody(string requestBody)
+        public IRequestBuilder WithBody(string requestBody)
         {
             if (requestBody == null)
             {

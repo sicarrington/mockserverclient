@@ -19,14 +19,14 @@ namespace MockServer.Client.Net.Tests.Integration
             {
                 httpClient.BaseAddress = new Uri("http://localhost:1080/");
 
-                var expectedRequest = new RequestBuilder()
+                var expectedRequest = RequestBuilder.Build()
                         .WithMethod(HttpMethod.Post)
                         .WithPath(path)
                         .WithBody(requestBody);
                 var mockServerClient = new MockServerClient(httpClient);
                 mockServerClient.When(expectedRequest)
-                .Respond(new ResponseBuilder().WithStatusCode(200));
-
+                    .Respond(builder => builder.WithStatusCode(200));
+                
                 var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, "/bodytest123");
                 httpRequestMessage.Content = new StringContent(requestBody, System.Text.Encoding.UTF8);
                 var response = await httpClient.SendAsync(httpRequestMessage);
@@ -45,13 +45,13 @@ namespace MockServer.Client.Net.Tests.Integration
             {
                 httpClient.BaseAddress = new Uri("http://localhost:1080/");
 
-                var expectedRequest = new RequestBuilder()
+                var expectedRequest = RequestBuilder.Build()
                         .WithMethod(HttpMethod.Post)
                         .WithPath(path)
                         .WithBody(requestBody);
                 var mockServerClient = new MockServerClient(httpClient);
                 mockServerClient.When(expectedRequest)
-                .Respond(new ResponseBuilder().WithStatusCode(200));
+                .Respond(responseBuilder => responseBuilder.WithStatusCode(200));
 
                 var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, "/bodytestfourfivesix");
                 httpRequestMessage.Content = new StringContent(requestBody, System.Text.Encoding.UTF8);

@@ -11,40 +11,34 @@ namespace MockServer.Client.Net.Tests.Unit.BuilderTests.ExpectationBuilderTests
     public class RespondTests
     {
         private readonly Mock<IMockServerClient> _mockServerClient;
-        private readonly RequestBuilder _requestBuilder;
+        private readonly IRequestBuilder _requestBuilder;
         private readonly ExpectationBuilder _expectationBuilder;
         
         public RespondTests()
         {
             _mockServerClient = new Mock<IMockServerClient>();
-            _requestBuilder = new RequestBuilder();
+            _requestBuilder = RequestBuilder.Build();
 
             _expectationBuilder = ExpectationBuilder.When(_mockServerClient.Object, _requestBuilder);
         }
-        [Fact]
-        public void GivenRespond_WhenResponsePassedIsNull_ThenExceptionIsThrown()
-        {
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                _expectationBuilder.Respond(null);
-            });
-        }
+        
         [Fact]
         public void GivenRespond_WhenResponseIsPassed_ThenExpectationIsBuiltAsExpected()
         {
-            var responseBuilder = new ResponseBuilder();
-            var result = _expectationBuilder.Respond(responseBuilder);
-
+            var responseBuilder = ResponseBuilder.Build(RequestBuilder.Build().Create());
+            var result = _expectationBuilder.Respond();
+        
             Assert.Equal(responseBuilder.Create(), result.HttpResponse);
             Assert.Equal(_requestBuilder.Create(), result.HttpRequest);
         }
+        
         [Fact]
         public void GivenRespond_WhenResponseIsPassed_ThenExpectationIsSetAgainstMockServerClient()
         {
             _mockServerClient.Setup(x => x.SetExpectations(It.IsAny<Expectation>())).Returns(Task.CompletedTask);
-            var responseBuilder = new ResponseBuilder();
-            var result = _expectationBuilder.Respond(responseBuilder);
-
+            var responseBuilder = ResponseBuilder.Build(RequestBuilder.Build().Create());
+            var result = _expectationBuilder.Respond(builder => responseBuilder);
+        
             _mockServerClient.Verify(x => x.SetExpectations(
                 It.Is<Expectation>(y =>
                 y.HttpRequest == _requestBuilder.Create() &&
