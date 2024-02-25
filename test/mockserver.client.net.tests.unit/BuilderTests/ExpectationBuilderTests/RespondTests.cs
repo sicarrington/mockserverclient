@@ -11,13 +11,13 @@ namespace MockServer.Client.Net.Tests.Unit.BuilderTests.ExpectationBuilderTests
     public class RespondTests
     {
         private readonly Mock<IMockServerClient> _mockServerClient;
-        private readonly RequestBuilder _requestBuilder;
-        private readonly ExpectationBuilder _expectationBuilder;
+        private readonly IRequestBuilder _requestBuilder;
+        private readonly IExpectationBuilder _expectationBuilder;
         
         public RespondTests()
         {
             _mockServerClient = new Mock<IMockServerClient>();
-            _requestBuilder = new RequestBuilder();
+            _requestBuilder = RequestBuilder.Build();
 
             _expectationBuilder = ExpectationBuilder.When(_mockServerClient.Object, _requestBuilder);
         }
@@ -32,7 +32,7 @@ namespace MockServer.Client.Net.Tests.Unit.BuilderTests.ExpectationBuilderTests
         [Fact]
         public void GivenRespond_WhenResponseIsPassed_ThenExpectationIsBuiltAsExpected()
         {
-            var responseBuilder = new ResponseBuilder();
+            var responseBuilder = ResponseBuilder.Build();
             var result = _expectationBuilder.Respond(responseBuilder);
 
             Assert.Equal(responseBuilder.Create(), result.HttpResponse);
@@ -42,7 +42,7 @@ namespace MockServer.Client.Net.Tests.Unit.BuilderTests.ExpectationBuilderTests
         public void GivenRespond_WhenResponseIsPassed_ThenExpectationIsSetAgainstMockServerClient()
         {
             _mockServerClient.Setup(x => x.SetExpectations(It.IsAny<Expectation>())).Returns(Task.CompletedTask);
-            var responseBuilder = new ResponseBuilder();
+            var responseBuilder = ResponseBuilder.Build();
             var result = _expectationBuilder.Respond(responseBuilder);
 
             _mockServerClient.Verify(x => x.SetExpectations(

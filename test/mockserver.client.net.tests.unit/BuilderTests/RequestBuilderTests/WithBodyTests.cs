@@ -6,11 +6,11 @@ namespace MockServer.Client.Net.Tests.Unit.BuilderTests.RequestBuilderTests
 {
     public class WithBodyTests
     {
-        private readonly RequestBuilder _requestBuilder;
+        private readonly IRequestBuilder _requestBuilder;
         
         public WithBodyTests()
         {
-            _requestBuilder = new RequestBuilder();
+            _requestBuilder = RequestBuilder.Build();
         }
         [Fact]
         public void GivenWithBodyIsCalled_WhenBodyPassedIsNull_ThenExceptionIsThrown()
@@ -18,7 +18,7 @@ namespace MockServer.Client.Net.Tests.Unit.BuilderTests.RequestBuilderTests
             Assert.Throws<ArgumentNullException>(() => { _requestBuilder.WithBody(null); });
         }
         [Fact]
-        public void GivenWithBodyIsCalled_WhenBodyPassedIsEmpty_ThenMethodIsSuccesful()
+        public void GivenWithBodyIsCalled_WhenBodyPassedIsEmpty_ThenMethodIsSuccessful()
         {
             var result = _requestBuilder.WithBody("");
             Assert.NotNull(result);
