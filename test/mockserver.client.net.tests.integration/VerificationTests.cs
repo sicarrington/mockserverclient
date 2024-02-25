@@ -4,7 +4,6 @@ using System;
 using System.Net.Http;
 using Xunit;
 
-
 namespace MockServer.Client.Net.Tests.Integration
 {
     public class VerificationTests
@@ -36,7 +35,7 @@ namespace MockServer.Client.Net.Tests.Integration
             }
         }
         [Fact]
-        public async void GivenRequestDoesNotMatchVerification_WhenVerificationIsAttempted_ThenVerificationSuceeds()
+        public async void GivenRequestDoesNotMatchVerification_WhenVerificationIsAttempted_ThenVerificationSucceeds()
         {
             var path = "/bodytest456";
             var requestBody = "This is the request body 456";

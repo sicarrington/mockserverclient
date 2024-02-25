@@ -18,7 +18,7 @@ namespace MockServer.Client.Net.Tests.Unit.BuilderTests.RequestBuilderTests
             Assert.Throws<ArgumentNullException>(() => { _requestBuilder.WithBody(null); });
         }
         [Fact]
-        public void GivenWithBodyIsCalled_WhenBodyPassedIsEmpty_ThenMethodIsSuccesful()
+        public void GivenWithBodyIsCalled_WhenBodyPassedIsEmpty_ThenMethodIsSuccessful()
         {
             var result = _requestBuilder.WithBody("");
             Assert.NotNull(result);

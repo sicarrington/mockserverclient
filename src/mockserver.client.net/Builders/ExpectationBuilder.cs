@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace MockServer.Client.Net.Builders
 {
-    public class ExpectationBuilder
+    public sealed  class ExpectationBuilder : IExpectationBuilder
     {
         private readonly IMockServerClient _mockServerClient;
         private readonly IRequestBuilder _requestBuilder;
@@ -15,7 +15,7 @@ namespace MockServer.Client.Net.Builders
             _mockServerClient = mockServerClient;
             _requestBuilder = httpRequest;
         }
-        internal static ExpectationBuilder When(IMockServerClient mockServerClient, IRequestBuilder requestBuilder)
+        internal static IExpectationBuilder When(IMockServerClient mockServerClient, IRequestBuilder requestBuilder)
         {
             if (mockServerClient == null)
             {

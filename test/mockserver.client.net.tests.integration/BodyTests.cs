@@ -31,6 +31,7 @@ namespace MockServer.Client.Net.Tests.Integration
                 Assert.Equal(System.Net.HttpStatusCode.OK, response.StatusCode);
             }
         }
+        
         [Fact]
         public async void GivenExpectationIsSetOnBody_WhenRequestIsMadeWithNonMatchingBody_ThenRequestIsNotMatched()
         {

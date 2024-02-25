@@ -12,7 +12,7 @@ namespace MockServer.Client.Net.Tests.Unit.BuilderTests.ExpectationBuilderTests
     {
         private readonly Mock<IMockServerClient> _mockServerClient;
         private readonly IRequestBuilder _requestBuilder;
-        private readonly ExpectationBuilder _expectationBuilder;
+        private readonly IExpectationBuilder _expectationBuilder;
         
         public RespondTests()
         {
