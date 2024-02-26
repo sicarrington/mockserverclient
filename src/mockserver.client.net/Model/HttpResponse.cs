@@ -25,7 +25,7 @@ namespace MockServer.Client.Net.Models
         /// <param name="reasonPhrase">reasonPhrase.</param>
         public HttpResponse(Delay delay = default(Delay), 
             string body = default(string), 
-            KeyToValue cookies = default(KeyToValue), 
+            IDictionary<string,string> cookies = null, 
             ConnectionOptions connectionOptions = default(ConnectionOptions), 
             IDictionary<string, IEnumerable<string>> headers = null, 
             int? statusCode = default(int?), 
@@ -56,7 +56,7 @@ namespace MockServer.Client.Net.Models
         /// Gets or Sets Cookies
         /// </summary>
         [DataMember(Name = "cookies", EmitDefaultValue = false)]
-        public KeyToValue Cookies { get; set; }
+        public IDictionary<string,string> Cookies { get; set; }
 
         /// <summary>
         /// Gets or Sets ConnectionOptions
