@@ -50,10 +50,8 @@ new MockServerClient(httpClient)
     .When(RequestBuilder().Build()
         .WithMethod(HttpMethod.Get)
         .WithPath("/mypath")
-        .WithQueryStringParameters(QueryStringExpectationBuilder
-            .Build()
-            .WithParameter(QueryStringParameterExpectationBuilder
-                .Build()
+        .WithQueryStringParameters(queryStringExpectationBuilder => queryStringExpectationBuilder
+            .WithParameter(queryStringParameterExpectationBuilder => queryStringParameterExpectationBuilder
                 .WithName("qs")
                 .WithValue("valueone"))
                 )
@@ -69,10 +67,8 @@ Example: Requiring a query string with the name `qs` which contains a guid/uuid 
             .When(new RequestBuilder()
                 .WithMethod(HttpMethod.Get)
                 .WithPath("/mypath")
-                .WithQueryStringParameters(QueryStringExpectationBuilder
-                    .Build()
-                    .WithParameter(QueryStringParameterExpectationBuilder
-                        .Build()
+                .WithQueryStringParameters(queryStringExpectationBuilder => queryStringExpectationBuilder
+                    .WithParameter(queryStringParameterExpectationBuilder => queryStringParameterExpectationBuilder
                         .WithName("qs")
                         .WithValue(SchemaValue.Uuid()))
                 )
@@ -87,8 +83,7 @@ Multiple query string value match configurations can be specified by chaining `W
 ### Optional Query Strings
 MockServer supports specifying optional query strings. These can be setup by specifying a parameter name with a leading `?`, e.g.
 ```csharp
-.WithParameter(QueryStringParameterExpectationBuilder
-                        .Build()
+.WithParameter(queryStringParameterExpectationBuilder => queryStringParameterExpectationBuilder
                         .WithName("?qs")
                         .WithValue(SchemaValue.Uuid())
 ```
@@ -96,8 +91,7 @@ MockServer supports specifying optional query strings. These can be setup by spe
 ### Exclusive Query Strings
 Query strings which must not appear are supported by specifying a parameter with a leading `!`, e.g.
 ```csharp
-.WithParameter(QueryStringParameterExpectationBuilder
-    .Build()
+.WithParameter(queryStringParameterExpectationBuilder => queryStringParameterExpectationBuilder
     .WithName("!qs")
     .WithValue(SchemaValue.Integer())
 ```
@@ -105,8 +99,7 @@ Query strings which must not appear are supported by specifying a parameter with
 ### Regex Matching
 Both querystring name and values can be matched by query strings, e.g.
 ```csharp
-.WithParameter(QueryStringParameterExpectationBuilder
-    .Build()
+.WithParameter(queryStringParameterExpectationBuilder => queryStringParameterExpectationBuilder
     .WithName("[A-z]{0,10}")
     .WithValue("[A-Z0-9\\-]+")
 ```
@@ -120,8 +113,7 @@ This would produce a call to the MockServer REST API as follows:
 
 The same can be achieved using the schema value syntax, e.g.
 ```csharp
-.WithParameter(QueryStringParameterExpectationBuilder
-    .Build()
+.WithParameter(queryStringParameterExpectationBuilder => queryStringParameterExpectationBuilder
     .WithName("[A-z]{0,10}")
     .WithValue(SchemaValue.StringWithPattern("[A-Z0-9\\-]+"))
 ```
@@ -175,3 +167,6 @@ new MockServerClient(httpClient)
          ));
 ```
 
+
+- Update request headers to support SchemaValue etc as per query string 
+- implement response cookie(?) - does it work?! - at least change the type on the response maybe and remove unused classes

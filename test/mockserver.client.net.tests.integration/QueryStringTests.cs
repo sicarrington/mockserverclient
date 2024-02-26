@@ -21,10 +21,9 @@ public class QueryStringTests
             .When(RequestBuilder.Build()
                 .WithMethod(HttpMethod.Get)
                 .WithPath(path)
-                .WithQueryStringParameters(QueryStringExpectationBuilder
-                    .Build()
-                    .WithParameter(QueryStringParameterExpectationBuilder
-                        .Build()
+                .WithQueryStringParameters(queryStringExpectationBuilder => queryStringExpectationBuilder
+                    .WithParameter(queryStringParameterExpectationBuilder => 
+                        queryStringParameterExpectationBuilder
                         .WithName("ParameterOne")
                         .WithValue("ParamterOneValue"))
                 )
@@ -48,10 +47,9 @@ public class QueryStringTests
             .When(RequestBuilder.Build()
                 .WithMethod(HttpMethod.Get)
                 .WithPath(path)
-                .WithQueryStringParameters(QueryStringExpectationBuilder
-                    .Build()
-                    .WithParameter(QueryStringParameterExpectationBuilder
-                        .Build()
+                .WithQueryStringParameters(queryStringExpectationBuilder => queryStringExpectationBuilder
+                    .WithParameter(queryStringParameterExpectationBuilder => 
+                        queryStringParameterExpectationBuilder
                         .WithName("Test2ParameterOne")
                         .WithValue(SchemaValue.Uuid()))
                 )
@@ -75,10 +73,9 @@ public class QueryStringTests
             .When(RequestBuilder.Build()
                 .WithMethod(HttpMethod.Get)
                 .WithPath(path)
-                .WithQueryStringParameters(QueryStringExpectationBuilder
-                    .Build()
-                    .WithParameter(QueryStringParameterExpectationBuilder
-                        .Build()
+                .WithQueryStringParameters(queryStringExpectationBuilder => queryStringExpectationBuilder
+                    .WithParameter(queryStringParameterExpectationBuilder => 
+                        queryStringParameterExpectationBuilder
                         .WithName("Test3ParameterOne")
                         .WithValue(SchemaValue.Integer()))
                 )
@@ -102,10 +99,9 @@ public class QueryStringTests
             .When(RequestBuilder.Build()
                 .WithMethod(HttpMethod.Get)
                 .WithPath(path)
-                .WithQueryStringParameters(QueryStringExpectationBuilder
-                    .Build()
-                    .WithParameter(QueryStringParameterExpectationBuilder
-                        .Build()
+                .WithQueryStringParameters(queryStringExpectationBuilder => queryStringExpectationBuilder
+                    .WithParameter(queryStringParameterExpectationBuilder => 
+                        queryStringParameterExpectationBuilder
                         .WithName("Test4ParameterOne")
                         .WithValue(SchemaValue.StringWithPattern("^S_[0-9]+$")))
                 )
@@ -129,14 +125,14 @@ public class QueryStringTests
             .When(RequestBuilder.Build()
                 .WithMethod(HttpMethod.Get)
                 .WithPath(path)
-                .WithQueryStringParameters(QueryStringExpectationBuilder
-                    .Build()
-                    .WithParameter(QueryStringParameterExpectationBuilder
-                        .Build()
+                .WithQueryStringParameters(queryStringExpectationBuilder => queryStringExpectationBuilder
+                    .WithParameter(queryStringParameterExpectationBuilder => 
+                        queryStringParameterExpectationBuilder
                         .WithName("Test5ParameterOne")
                         .WithValue(SchemaValue.StringWithPattern("^T_[0-9]+$"))
                         )
-                    .WithParameter(QueryStringParameterExpectationBuilder.Build()
+                    .WithParameter(queryStringParameterExpectationBuilder => 
+                        queryStringParameterExpectationBuilder
                         .WithName("Test5ParameterTwo")
                         .WithValue(SchemaValue.Uuid()))
                 )
@@ -162,10 +158,9 @@ public class QueryStringTests
             .When(RequestBuilder.Build()
                 .WithMethod(HttpMethod.Get)
                 .WithPath(path)
-                .WithQueryStringParameters(QueryStringExpectationBuilder
-                    .Build()
-                    .WithParameter(QueryStringParameterExpectationBuilder
-                        .Build()
+                .WithQueryStringParameters(queryStringExpectationBuilder => queryStringExpectationBuilder
+                    .WithParameter(queryStringParameterExpectationBuilder => 
+                        queryStringParameterExpectationBuilder
                         .WithName("!Test6ParameterOne")
                         .WithValue(SchemaValue.Integer()))
                 )
@@ -191,10 +186,9 @@ public class QueryStringTests
             .When(RequestBuilder.Build()
                 .WithMethod(HttpMethod.Get)
                 .WithPath(path)
-                .WithQueryStringParameters(QueryStringExpectationBuilder
-                    .Build()
-                    .WithParameter(QueryStringParameterExpectationBuilder
-                        .Build()
+                .WithQueryStringParameters(queryStringExpectationBuilder => queryStringExpectationBuilder
+                    .WithParameter(queryStringParameterExpectationBuilder => 
+                        queryStringParameterExpectationBuilder
                         .WithName("?Test7ParameterOne")
                         .WithValue(SchemaValue.Integer()))
                 )
@@ -220,10 +214,9 @@ public class QueryStringTests
             .When(RequestBuilder.Build()
                 .WithMethod(HttpMethod.Get)
                 .WithPath(path)
-                .WithQueryStringParameters(QueryStringExpectationBuilder
-                    .Build()
-                    .WithParameter(QueryStringParameterExpectationBuilder
-                        .Build()
+                .WithQueryStringParameters(queryStringExpectationBuilder => queryStringExpectationBuilder
+                    .WithParameter(queryStringParameterExpectationBuilder => 
+                        queryStringParameterExpectationBuilder
                         .WithName("?Test8ParameterOne")
                         .WithValue(SchemaValue.Integer()))
                 )

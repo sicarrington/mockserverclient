@@ -15,11 +15,15 @@ public class WithQueryStringParametersTests
             { "ParameterOne", new[] { "ParameterOneValueA", "ParameterOneValueB" } },
             { "ParameterTwo", new[] { "ParameterTwoValueA" } }
         };
-        var queryStringExpectationBuilder = new Mock<IQueryStringExpectationBuilder>();
-        queryStringExpectationBuilder.Setup(x => x.Create())
-            .Returns(queryStringParameters);
 
-        var result = RequestBuilder.Build().WithQueryStringParameters(queryStringExpectationBuilder.Object);
+        var result = RequestBuilder.Build().WithQueryStringParameters(queryStringExpectationBuilder =>
+            queryStringExpectationBuilder.WithParameter(parameterBuilder =>
+                    parameterBuilder.WithName("ParameterOne")
+                        .WithValue("ParameterOneValueA")
+                        .WithValue("ParameterOneValueB"))
+                .WithParameter(parameterBuilder =>
+                    parameterBuilder.WithName("ParameterTwo")
+                        .WithValue("ParameterTwoValueA")));
         Assert.Equal(queryStringParameters, result.Create().QueryStringParameters);
     }
 }

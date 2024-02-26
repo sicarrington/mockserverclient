@@ -8,7 +8,10 @@ namespace MockServer.Client.Net.Builders
     public sealed class RequestBuilder : IRequestBuilder
     {
         private readonly HttpRequest _httpRequest;
-        
+
+        private Func<IQueryStringExpectationBuilder, IQueryStringExpectationBuilder> _queryStringExpectationBuilder =
+            null;
+
         private RequestBuilder(HttpRequest request)
         {
             _httpRequest = request;
@@ -64,20 +67,25 @@ namespace MockServer.Client.Net.Builders
             _httpRequest.Cookies = cookies;
             return this;
         }
-
-        public IRequestBuilder WithQueryStringParameters(IQueryStringExpectationBuilder queryStringExpectationBuilder)
+        
+        public IRequestBuilder WithQueryStringParameters(Func<IQueryStringExpectationBuilder,IQueryStringExpectationBuilder> queryStringExpectationBuilder)
         {
             if (queryStringExpectationBuilder == null)
             {
                 throw new ArgumentNullException(nameof(queryStringExpectationBuilder));
             }
-            
-            _httpRequest.QueryStringParameters = queryStringExpectationBuilder.Create();
+
+            _queryStringExpectationBuilder = queryStringExpectationBuilder;
             return this;
         }
         
         public HttpRequest Create()
         {
+            if (_queryStringExpectationBuilder != null)
+            {
+                _httpRequest.QueryStringParameters =
+                    _queryStringExpectationBuilder(QueryStringExpectationBuilder.Build()).Create();
+            }
             return _httpRequest;
         }
     }
