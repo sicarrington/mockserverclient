@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using MockServer.Client.Net.Models;
 
 namespace MockServer.Client.Net.Builders
@@ -8,7 +9,8 @@ namespace MockServer.Client.Net.Builders
         private readonly HttpRequest _httpRequest;
         private readonly HttpResponse _httpResponse;
 
-        private Func<IHeadersResponseBuilder, IHeadersResponseBuilder> _headersResponseBuilder;
+        private Func<IHeadersResponseBuilder, IHeadersResponseBuilder> _headersResponseBuilder = null;
+        private IDictionary<string, IEnumerable<string>> _headers;
         
         private ResponseBuilder(HttpRequest request, HttpResponse response)
         {
@@ -28,6 +30,10 @@ namespace MockServer.Client.Net.Builders
             {
                 _httpResponse.Headers = _headersResponseBuilder(HeadersResponseBuilder.Build(_httpRequest)).Create();
             }
+            else if (_headers != null)
+            {
+                _httpResponse.Headers = _headers;
+            }
 
             return _httpResponse;
         }
@@ -40,7 +46,15 @@ namespace MockServer.Client.Net.Builders
 
         public IResponseBuilder WithHeaders(Func<IHeadersResponseBuilder, IHeadersResponseBuilder> headersResponseBuilder = null)
         {
+            _headers = null;
             _headersResponseBuilder = headersResponseBuilder;
+            return this;
+        }
+
+        public IResponseBuilder WithHeaders(IDictionary<string, IEnumerable<string>> headers)
+        {
+            _headersResponseBuilder = null;
+            _headers = headers;
             return this;
         }
     }

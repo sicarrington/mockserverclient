@@ -136,3 +136,42 @@ This would produce a call to the MockServer REST API as follows:
         }]
     }
 ```
+
+# Configuring Response Headers
+Response headers can be configured as part of setting up a mock. Multiple headers and multiple values per header can be added. 
+
+For example, a simple static header collection can be added as follows
+```csharp
+new MockServerClient(httpClient)
+    .When(RequestBuilder.Build()
+        .WithMethod(HttpMethod.Get)
+        .WithPath("http://mockserver/test"))
+    .Respond(
+        responseBuilder => responseBuilder
+            .WithStatusCode(200)
+            .WithHeaders(new Dictionary<string, IEnumerable<string>>
+                { { "HeaderA", new[] { "HeaderValueA", "HeaderValueB" } } }));
+```
+
+Headers can also be added via the builder - For example the code below sets up a header named `HeaderA` with values `ValueA` and `ValueB`. It also adds a header named `HeaderB` with a value derived from the request.
+```csharp
+new MockServerClient(httpClient)
+    .When(RequestBuilder.Build()
+        .WithMethod(HttpMethod.Get)
+        .WithPath("http://mypath"))
+    .Respond(
+        responseBuilder => responseBuilder
+            .WithStatusCode(200)
+            .WithHeaders(headersResponseBuilder => headersResponseBuilder
+                .WithHeader(headerResponseBuilder => headerResponseBuilder
+                    .WithName("HeaderA")
+                    .WithValues(headerValueResponseBuilder => headerValueResponseBuilder
+                        .WithValue("ValueA")
+                        .WithValue("ValueB")))
+                .WithHeader(headerResponseBuilder => headerResponseBuilder
+                    .WithName("HeaderB")
+                    .WithValues(headerValueResponseBuilder => headerValueResponseBuilder
+                        .WithValue(request => request.Path)))
+         ));
+```
+
