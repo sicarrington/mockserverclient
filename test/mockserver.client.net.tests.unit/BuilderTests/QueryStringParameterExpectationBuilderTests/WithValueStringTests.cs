@@ -6,11 +6,11 @@ namespace MockServer.Client.Net.Tests.Unit.BuilderTests.QueryStringParameterExpe
 
 public class WithValueStringTests
 {
-    private IQueryStringParameterExpectationBuilder sut;
+    private readonly IQueryStringParameterExpectationBuilder _sut;
 
     public WithValueStringTests()
     {
-        sut = QueryStringParameterExpectationBuilder.Build()
+        _sut = QueryStringParameterExpectationBuilder.Build()
             .WithName("AParameterName");
     }
     
@@ -18,18 +18,18 @@ public class WithValueStringTests
     public void WhenValueIsSimpleString_ThenValueIsMappedCorrectly()
     {
         var expectedValue = "ThisIsAValue";
-        sut.WithValue(expectedValue);
+        _sut.WithValue(expectedValue);
         
-        Assert.Equal(expectedValue, sut.Create().Value.First());
+        Assert.Equal(expectedValue, _sut.Create().Value.First());
     }
     
     [Fact]
     public void WhenValueIsRegex_ThenValueIsMappedCorrectly()
     {
         var expectedValue = "^[A-Z0-9-]+$";
-        sut.WithValue(expectedValue);
+        _sut.WithValue(expectedValue);
         
-        Assert.Equal(expectedValue, sut.Create().Value.First());
+        Assert.Equal(expectedValue, _sut.Create().Value.First());
     }
 
     [Fact]
@@ -40,12 +40,12 @@ public class WithValueStringTests
         var expectedValueThree = "[A-z]{0,10}";
         var expectedValueFour = "ExpectedValue456";
 
-        sut.WithValue(expectedValueOne);
-        sut.WithValue(expectedValueTwo);
-        sut.WithValue(expectedValueThree);
-        sut.WithValue(expectedValueFour);
+        _sut.WithValue(expectedValueOne);
+        _sut.WithValue(expectedValueTwo);
+        _sut.WithValue(expectedValueThree);
+        _sut.WithValue(expectedValueFour);
 
-        var result = sut.Create();
+        var result = _sut.Create();
         
         Assert.Equal(4, result.Value.Count());
         Assert.Contains(expectedValueOne, result.Value);

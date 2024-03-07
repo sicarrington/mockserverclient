@@ -28,17 +28,19 @@ namespace MockServer.Client.Net.Builders
             var expectationBuilder = new ExpectationBuilder(mockServerClient, requestBuilder);
             return expectationBuilder;
         }
-        public Expectation Respond(IResponseBuilder responseBuilder)
-        {
-            if (responseBuilder == null)
-            {
-                throw new ArgumentNullException(nameof(responseBuilder));
-            }
 
+        public Expectation Respond(Func<IResponseBuilder, IResponseBuilder> responseBuilder = null)
+        {
+            var httpRequest = _requestBuilder.Create();
+
+            var response = responseBuilder == null
+                ? ResponseBuilder.Build(httpRequest).Create()
+                : responseBuilder(ResponseBuilder.Build(httpRequest)).Create();
+            
             var expectation = new Expectation
             {
-                HttpRequest = _requestBuilder.Create(),
-                HttpResponse = responseBuilder.Create()
+                HttpRequest = httpRequest,
+                HttpResponse = response
             };
 
             var task = Task.Run(async () => { await _mockServerClient.SetExpectations(expectation); });

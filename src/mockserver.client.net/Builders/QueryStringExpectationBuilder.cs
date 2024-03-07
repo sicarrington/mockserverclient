@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace MockServer.Client.Net.Builders
@@ -16,11 +17,14 @@ namespace MockServer.Client.Net.Builders
         {
             return new QueryStringExpectationBuilder();
         }
-        
+
         public IQueryStringExpectationBuilder WithParameter(
-            IQueryStringParameterExpectationBuilder queryStringParameterExpectationBuilder)
+            Func<IQueryStringParameterExpectationBuilder, IQueryStringParameterExpectationBuilder>
+                queryStringParameterExpectationBuilder)
         {
-            var parameter = queryStringParameterExpectationBuilder.Create();
+            var parameter = queryStringParameterExpectationBuilder(
+                    QueryStringParameterExpectationBuilder.Build())
+                .Create();
             _queryStringExpectation.Add(parameter.Key, parameter.Value);
             return this;
         }

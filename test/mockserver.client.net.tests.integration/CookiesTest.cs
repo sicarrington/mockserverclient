@@ -24,7 +24,7 @@ public class CookiesTest
                 .WithPath(path)
                 .WithMethod(HttpMethod.Get)
                 .WithCookies(new Dictionary<string, string>{{"CookieOne", "CookieValueOne"}}))
-            .Respond(ResponseBuilder.Build().WithStatusCode(200));
+            .Respond(responseBuilder => responseBuilder.WithStatusCode(200));
 
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, path);
         cookieContainer.Add(httpClient.BaseAddress, new Cookie("CookieOne", "CookieValueOne"));
@@ -48,7 +48,7 @@ public class CookiesTest
                 .WithPath(path)
                 .WithMethod(HttpMethod.Get)
                 .WithCookies(new Dictionary<string, string>{{"CookieOneFail", "CookieValueOne"}}))
-            .Respond(ResponseBuilder.Build().WithStatusCode(200));
+            .Respond(responseBuilder => responseBuilder.WithStatusCode(200));
 
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, path);
         cookieContainer.Add(httpClient.BaseAddress, new Cookie("CookieOne", "CookieValueOne"));

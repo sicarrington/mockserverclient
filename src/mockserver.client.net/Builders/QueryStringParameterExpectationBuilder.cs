@@ -4,7 +4,7 @@ using MockServer.Client.Net.Models;
 
 namespace MockServer.Client.Net.Builders
 {
-    public class QueryStringParameterExpectationBuilder : IQueryStringParameterExpectationBuilder
+    public sealed class QueryStringParameterExpectationBuilder : IQueryStringParameterExpectationBuilder
     {
         private string Name { get; set; }
 

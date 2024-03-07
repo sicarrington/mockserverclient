@@ -23,7 +23,13 @@ namespace MockServer.Client.Net.Models
         /// <param name="headers">headers.</param>
         /// <param name="statusCode">statusCode.</param>
         /// <param name="reasonPhrase">reasonPhrase.</param>
-        public HttpResponse(Delay delay = default(Delay), string body = default(string), KeyToValue cookies = default(KeyToValue), ConnectionOptions connectionOptions = default(ConnectionOptions), KeyToMultiValue headers = default(KeyToMultiValue), int? statusCode = default(int?), string reasonPhrase = default(string))
+        public HttpResponse(Delay delay = default(Delay), 
+            string body = default(string), 
+            IDictionary<string,string> cookies = null, 
+            ConnectionOptions connectionOptions = default(ConnectionOptions), 
+            IDictionary<string, IEnumerable<object>> headers = null, 
+            int? statusCode = default(int?), 
+            string reasonPhrase = default(string))
         {
             this.Delay = delay;
             this.Body = body;
@@ -50,7 +56,7 @@ namespace MockServer.Client.Net.Models
         /// Gets or Sets Cookies
         /// </summary>
         [DataMember(Name = "cookies", EmitDefaultValue = false)]
-        public KeyToValue Cookies { get; set; }
+        public IDictionary<string,string> Cookies { get; set; }
 
         /// <summary>
         /// Gets or Sets ConnectionOptions
@@ -62,7 +68,7 @@ namespace MockServer.Client.Net.Models
         /// Gets or Sets Headers
         /// </summary>
         [DataMember(Name = "headers", EmitDefaultValue = false)]
-        public KeyToMultiValue Headers { get; set; }
+        public IDictionary<string, IEnumerable<object>> Headers { get; set; }
 
         /// <summary>
         /// Gets or Sets StatusCode

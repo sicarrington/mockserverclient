@@ -24,8 +24,8 @@ namespace MockServer.Client.Net.Tests.Integration
                         .WithBody(requestBody);
                 var mockServerClient = new MockServerClient(httpClient);
                 mockServerClient.When(expectedRequest)
-                .Respond(ResponseBuilder.Build().WithStatusCode(200));
-
+                    .Respond(builder => builder.WithStatusCode(200));
+                
                 var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, "/bodytest123");
                 httpRequestMessage.Content = new StringContent(requestBody, System.Text.Encoding.UTF8);
                 var response = await httpClient.SendAsync(httpRequestMessage);
@@ -50,7 +50,7 @@ namespace MockServer.Client.Net.Tests.Integration
                         .WithBody(requestBody);
                 var mockServerClient = new MockServerClient(httpClient);
                 mockServerClient.When(expectedRequest)
-                .Respond(ResponseBuilder.Build().WithStatusCode(200));
+                .Respond(responseBuilder => responseBuilder.WithStatusCode(200));
 
                 var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, "/bodytestfourfivesix");
                 httpRequestMessage.Content = new StringContent(requestBody, System.Text.Encoding.UTF8);

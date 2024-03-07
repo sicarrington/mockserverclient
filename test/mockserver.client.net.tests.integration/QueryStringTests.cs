@@ -21,15 +21,14 @@ public class QueryStringTests
             .When(RequestBuilder.Build()
                 .WithMethod(HttpMethod.Get)
                 .WithPath(path)
-                .WithQueryStringParameters(QueryStringExpectationBuilder
-                    .Build()
-                    .WithParameter(QueryStringParameterExpectationBuilder
-                        .Build()
+                .WithQueryStringParameters(queryStringExpectationBuilder => queryStringExpectationBuilder
+                    .WithParameter(queryStringParameterExpectationBuilder => 
+                        queryStringParameterExpectationBuilder
                         .WithName("ParameterOne")
                         .WithValue("ParamterOneValue"))
                 )
             )
-            .Respond(ResponseBuilder.Build().WithStatusCode(200));
+            .Respond(responseBuilder => responseBuilder.WithStatusCode(200));
 
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{path}?ParameterOne=ParamterOneValue");
         var response = await httpClient.SendAsync(httpRequestMessage);
@@ -48,15 +47,14 @@ public class QueryStringTests
             .When(RequestBuilder.Build()
                 .WithMethod(HttpMethod.Get)
                 .WithPath(path)
-                .WithQueryStringParameters(QueryStringExpectationBuilder
-                    .Build()
-                    .WithParameter(QueryStringParameterExpectationBuilder
-                        .Build()
+                .WithQueryStringParameters(queryStringExpectationBuilder => queryStringExpectationBuilder
+                    .WithParameter(queryStringParameterExpectationBuilder => 
+                        queryStringParameterExpectationBuilder
                         .WithName("Test2ParameterOne")
                         .WithValue(SchemaValue.Uuid()))
                 )
             )
-            .Respond(ResponseBuilder.Build().WithStatusCode(200));
+            .Respond(responseBuilder => responseBuilder.WithStatusCode(200));
 
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{path}?Test2ParameterOne={Guid.NewGuid()}");
         var response = await httpClient.SendAsync(httpRequestMessage);
@@ -75,15 +73,14 @@ public class QueryStringTests
             .When(RequestBuilder.Build()
                 .WithMethod(HttpMethod.Get)
                 .WithPath(path)
-                .WithQueryStringParameters(QueryStringExpectationBuilder
-                    .Build()
-                    .WithParameter(QueryStringParameterExpectationBuilder
-                        .Build()
+                .WithQueryStringParameters(queryStringExpectationBuilder => queryStringExpectationBuilder
+                    .WithParameter(queryStringParameterExpectationBuilder => 
+                        queryStringParameterExpectationBuilder
                         .WithName("Test3ParameterOne")
                         .WithValue(SchemaValue.Integer()))
                 )
             )
-            .Respond(ResponseBuilder.Build().WithStatusCode(200));
+            .Respond(responseBuilder => responseBuilder.WithStatusCode(200));
 
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{path}?Test3ParameterOne={new Random().Next()}");
         var response = await httpClient.SendAsync(httpRequestMessage);
@@ -102,15 +99,14 @@ public class QueryStringTests
             .When(RequestBuilder.Build()
                 .WithMethod(HttpMethod.Get)
                 .WithPath(path)
-                .WithQueryStringParameters(QueryStringExpectationBuilder
-                    .Build()
-                    .WithParameter(QueryStringParameterExpectationBuilder
-                        .Build()
+                .WithQueryStringParameters(queryStringExpectationBuilder => queryStringExpectationBuilder
+                    .WithParameter(queryStringParameterExpectationBuilder => 
+                        queryStringParameterExpectationBuilder
                         .WithName("Test4ParameterOne")
                         .WithValue(SchemaValue.StringWithPattern("^S_[0-9]+$")))
                 )
             )
-            .Respond(ResponseBuilder.Build().WithStatusCode(200));
+            .Respond(responseBuilder => responseBuilder.WithStatusCode(200));
 
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{path}?Test4ParameterOne=S_{new Random().Next()}");
         var response = await httpClient.SendAsync(httpRequestMessage);
@@ -129,19 +125,19 @@ public class QueryStringTests
             .When(RequestBuilder.Build()
                 .WithMethod(HttpMethod.Get)
                 .WithPath(path)
-                .WithQueryStringParameters(QueryStringExpectationBuilder
-                    .Build()
-                    .WithParameter(QueryStringParameterExpectationBuilder
-                        .Build()
+                .WithQueryStringParameters(queryStringExpectationBuilder => queryStringExpectationBuilder
+                    .WithParameter(queryStringParameterExpectationBuilder => 
+                        queryStringParameterExpectationBuilder
                         .WithName("Test5ParameterOne")
                         .WithValue(SchemaValue.StringWithPattern("^T_[0-9]+$"))
                         )
-                    .WithParameter(QueryStringParameterExpectationBuilder.Build()
+                    .WithParameter(queryStringParameterExpectationBuilder => 
+                        queryStringParameterExpectationBuilder
                         .WithName("Test5ParameterTwo")
                         .WithValue(SchemaValue.Uuid()))
                 )
             )
-            .Respond(ResponseBuilder.Build().WithStatusCode(200));
+            .Respond(responseBuilder => responseBuilder.WithStatusCode(200));
 
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{path}?Test5ParameterOne=T_{new Random().Next()}&Test5ParameterTwo={Guid.NewGuid()}");
         var response = await httpClient.SendAsync(httpRequestMessage);
@@ -150,8 +146,7 @@ public class QueryStringTests
     }
 
     [Fact]
-    public async Task
-        GivenParameterIsSpecified_WhenParameterIsConfiguredAsExclusive_ThenRequestIncludingThatParameterIsNotMatched()
+    public async Task GivenParameterIsSpecified_WhenParameterIsConfiguredAsExclusive_ThenRequestIncludingThatParameterIsNotMatched()
     {
         var path = $"/querystringtest{Guid.NewGuid()}";
 
@@ -162,15 +157,14 @@ public class QueryStringTests
             .When(RequestBuilder.Build()
                 .WithMethod(HttpMethod.Get)
                 .WithPath(path)
-                .WithQueryStringParameters(QueryStringExpectationBuilder
-                    .Build()
-                    .WithParameter(QueryStringParameterExpectationBuilder
-                        .Build()
+                .WithQueryStringParameters(queryStringExpectationBuilder => queryStringExpectationBuilder
+                    .WithParameter(queryStringParameterExpectationBuilder => 
+                        queryStringParameterExpectationBuilder
                         .WithName("!Test6ParameterOne")
                         .WithValue(SchemaValue.Integer()))
                 )
             )
-            .Respond(ResponseBuilder.Build().WithStatusCode(200));
+            .Respond(responseBuilder => responseBuilder.WithStatusCode(200));
 
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{path}?Test6ParameterOne={new Random().Next()}");
         var response = await httpClient.SendAsync(httpRequestMessage);
@@ -179,8 +173,7 @@ public class QueryStringTests
     }
 
     [Fact]
-    public async Task
-        GivenParameterIsSpecified_WhenParameterIsConfiguredAsOptional_ThenRequestWithoutThatParameterIsMatched()
+    public async Task GivenParameterIsSpecified_WhenParameterIsConfiguredAsOptional_ThenRequestWithoutThatParameterIsMatched()
     {
         var path = $"/querystringtest{Guid.NewGuid()}";;
 
@@ -191,15 +184,14 @@ public class QueryStringTests
             .When(RequestBuilder.Build()
                 .WithMethod(HttpMethod.Get)
                 .WithPath(path)
-                .WithQueryStringParameters(QueryStringExpectationBuilder
-                    .Build()
-                    .WithParameter(QueryStringParameterExpectationBuilder
-                        .Build()
+                .WithQueryStringParameters(queryStringExpectationBuilder => queryStringExpectationBuilder
+                    .WithParameter(queryStringParameterExpectationBuilder => 
+                        queryStringParameterExpectationBuilder
                         .WithName("?Test7ParameterOne")
                         .WithValue(SchemaValue.Integer()))
                 )
             )
-            .Respond(ResponseBuilder.Build().WithStatusCode(200));
+            .Respond(responseBuilder => responseBuilder.WithStatusCode(200));
 
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{path}");
         var response = await httpClient.SendAsync(httpRequestMessage);
@@ -208,8 +200,7 @@ public class QueryStringTests
     }
     
     [Fact]
-    public async Task
-        GivenParameterIsSpecified_WhenParameterIsConfiguredAsDifferentTypeFromRequest_ThenRequestIsNotMatched()
+    public async Task GivenParameterIsSpecified_WhenParameterIsConfiguredAsDifferentTypeFromRequest_ThenRequestIsNotMatched()
     {
         var path = $"/querystringtest{Guid.NewGuid()}";;
 
@@ -220,15 +211,14 @@ public class QueryStringTests
             .When(RequestBuilder.Build()
                 .WithMethod(HttpMethod.Get)
                 .WithPath(path)
-                .WithQueryStringParameters(QueryStringExpectationBuilder
-                    .Build()
-                    .WithParameter(QueryStringParameterExpectationBuilder
-                        .Build()
+                .WithQueryStringParameters(queryStringExpectationBuilder => queryStringExpectationBuilder
+                    .WithParameter(queryStringParameterExpectationBuilder => 
+                        queryStringParameterExpectationBuilder
                         .WithName("?Test8ParameterOne")
                         .WithValue(SchemaValue.Integer()))
                 )
             )
-            .Respond(ResponseBuilder.Build().WithStatusCode(200));
+            .Respond(responseBuilder => responseBuilder.WithStatusCode(200));
 
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{path}?Test8ParameterOne={Guid.NewGuid()}");
         var response = await httpClient.SendAsync(httpRequestMessage);
