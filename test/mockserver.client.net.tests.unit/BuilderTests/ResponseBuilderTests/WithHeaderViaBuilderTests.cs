@@ -9,9 +9,9 @@ public class WithHeaderViaBuilderTests
     [Fact]
     public void WhenWithHeadersIsNotCalled_ThenHeadersAreNotAddedToResponse()
     {
-        var responseBuilder = ResponseBuilder.Build(RequestBuilder.Build().Create());
+        var sut = ResponseBuilder.Build(RequestBuilder.Build().Create());
 
-        var response = responseBuilder.Create();
+        var response = sut.Create();
         
         Assert.Null(response.Headers);
     }
@@ -21,14 +21,14 @@ public class WithHeaderViaBuilderTests
     {
         var headerName = "HeaderOne";
         var headerValue = "HeaderOneValue";
-        var responseBuilder = ResponseBuilder.Build(RequestBuilder.Build().Create());
+        var sut = ResponseBuilder.Build(RequestBuilder.Build().Create());
 
-        responseBuilder.WithHeaders(headersResponseBuilder => headersResponseBuilder.WithHeader(headerResponseBuilder =>
+        sut.WithHeaders(headersResponseBuilder => headersResponseBuilder.WithHeader(headerResponseBuilder =>
             headerResponseBuilder.WithName(headerName)
                 .WithValues(headerValuesBuilder => headerValuesBuilder.WithValue(headerValue))));
 
-        var response = responseBuilder.Create();
+        var response = sut.Create();
 
-        Assert.Contains(response.Headers, pair => pair.Key == headerName && pair.Value.First() == headerValue);
+        Assert.Contains(response.Headers, pair => pair.Key == headerName && pair.Value.First().ToString() == headerValue);
     }
 }

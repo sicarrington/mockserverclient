@@ -34,7 +34,7 @@ namespace MockServer.Client.Net.Models
         /// <param name="secure">secure.</param>
         /// <param name="keepAlive">keepAlive.</param>
         public HttpRequest(string body = default(string), 
-            IDictionary<string, IEnumerable<string>> headers = null, 
+            IDictionary<string, IEnumerable<object>> headers = null, 
             IDictionary<string,string> cookies = null, 
             IDictionary<string, IEnumerable<object>> queryStringParameters = null, 
             string path = default(string), 
@@ -43,7 +43,7 @@ namespace MockServer.Client.Net.Models
             bool? keepAlive = default(bool?))
         {
             this.Body = body;
-            this.Headers = headers ?? new Dictionary<string, IEnumerable<string>>();
+            this.Headers = headers ?? new Dictionary<string, IEnumerable<object>>();
             this.Cookies = cookies ?? new Dictionary<string, string>();
             this.QueryStringParameters = queryStringParameters ?? new Dictionary<string, IEnumerable<object>>();
             this.Path = path;
@@ -62,7 +62,7 @@ namespace MockServer.Client.Net.Models
         /// Gets or Sets Headers
         /// </summary>
         [DataMember(Name = "headers", EmitDefaultValue = false)]
-        public IDictionary<string, IEnumerable<string>> Headers { get; set; }
+        public IDictionary<string, IEnumerable<object>> Headers { get; set; }
 
         /// <summary>
         /// Gets or Sets Cookies

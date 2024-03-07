@@ -11,6 +11,7 @@ namespace MockServer.Client.Net.Builders
         IRequestBuilder WithMethod(HttpMethod method);
         IRequestBuilder WithBody(string requestBody);
         IRequestBuilder WithHeaders(IDictionary<string, IEnumerable<string>> headers);
+        IRequestBuilder WithHeaders(Func<IRequestHeadersExpectationBuilder, IRequestHeadersExpectationBuilder> requestHeadersBuilder);
         IRequestBuilder WithCookies(IDictionary<string, string> cookies);
         IRequestBuilder WithQueryStringParameters(
             Func<IQueryStringExpectationBuilder, IQueryStringExpectationBuilder> queryStringExpectationBuilder);

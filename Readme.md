@@ -40,9 +40,78 @@ Verify the expected request was made
 await mockServerClient.Verify(expectedRequest.Create(), VerificationTimes.Once)
 ```
 
+## Configuring Matches
 
-## Configuring Query String Matches
-The `QueryStringExpectationBuilder` and `QueryStringParameterExpectationBuilder` can be used to set up expectations for query strings. [See the MockServer documentation](https://www.mock-server.com/mock_server/getting_started.html) for the kinds of syntax that are supported.
+### Header Matches
+The expectation builders allow you to setup matching in a few different ways. See the examples below and  [the MockServer documentation](https://www.mock-server.com/mock_server/getting_started.html) for the kinds of syntax that are supported.
+
+Example: requiring a named header with a specific value.
+```csharp
+new MockServerClient(httpClient)
+    .When(RequestBuilder.Build()
+        .WithPath("/mypath")
+        .WithMethod(HttpMethod.Post)
+        .WithHeaders(new Dictionary<string, IEnumerable<string>>{{"HeaderOne", new[]{"ValueOne"}}}))
+    .Respond(responseBuilder => responseBuilder.WithStatusCode(200));
+```
+
+MockServer supports a schema value syntax enabling you to match header values by type. This is enabled via the `SchemaValue` class. 
+
+Example: Requiring a header with the name `HeaderOne` which has an `integer` value.
+```csharp
+new MockServerClient(httpClient)
+    .When(RequestBuilder.Build()
+        .WithPath("/mypath")
+        .WithMethod(HttpMethod.Post)
+        .WithHeaders(headersResponseBuilder => headersResponseBuilder.WithHeader(
+                headerResponseBuilder => headerResponseBuilder
+                    .WithName("HeaderOne")
+                    .WithValues(
+                    headerValueResponseBuilder => headerValueResponseBuilder.WithValue(SchemaValue.Integer())))))
+    .Respond(responseBuilder => responseBuilder.WithStatusCode(200));
+```
+Multiple expected header values can be configured by chaining calls to `WithValue` on the `headerValueResponseBuilder` and multiple headers can be configured by chaining calls to `WithHeader` on the `headersResponseBuilder`.
+
+#### Optional Headers
+Optionality can be configured in mockserver using the `?` operator. For example
+```csharp
+.WithHeaders(headersResponseBuilder => headersResponseBuilder.WithHeader(
+    headerResponseBuilder => headerResponseBuilder
+        .WithName("?HeaderTwo")
+        .WithValues(
+            headerValueResponseBuilder => headerValueResponseBuilder.WithValue("?TestValue"))))
+            
+```
+
+#### Exclusive Headers
+Exclusive headers/values can be configured using the `!` operator. i.e. when a header/value must not be included.
+```csharp
+.WithHeader(
+    headerResponseBuilder => headerResponseBuilder
+        .WithName("!HeaderThree"))
+```
+
+#### Regex Matching
+Both header name and values can be matched by regex strings, e.g.
+```csharp
+.WithHeader(
+    headerResponseBuilder => headerResponseBuilder
+        .WithName("Header.*")
+        .WithValues(
+            headerValueResponseBuilder => headerValueResponseBuilder.WithValue(@"[A-Z0-9\\-]+")))
+```
+
+Similarly, regex can be used using the schema value syntax, e.g.
+```csharp
+.WithHeader(
+    headerResponseBuilder => headerResponseBuilder
+        .WithName("Header.*")
+        .WithValues(
+            headerValueResponseBuilder => headerValueResponseBuilder.WithValue(SchemaValue.StringWithPattern("[A-Z0-9\\-]+"))))
+```
+
+### Configuring Query String Matches
+The expectation builders allow you to setup matching in a few different ways. See the examples below and  [the MockServer documentation](https://www.mock-server.com/mock_server/getting_started.html) for the kinds of syntax that are supported.
 
 Example: Requiring a query string with the name `qs` with a specific value of `valueone`:
 ```csharp
@@ -80,7 +149,7 @@ Multiple query string match configurations can be specified by chaining `WithPar
 
 Multiple query string value match configurations can be specified by chaining `WithValue` calls.
 
-### Optional Query Strings
+#### Optional Query Strings
 MockServer supports specifying optional query strings. These can be setup by specifying a parameter name with a leading `?`, e.g.
 ```csharp
 .WithParameter(queryStringParameterExpectationBuilder => queryStringParameterExpectationBuilder
@@ -88,7 +157,7 @@ MockServer supports specifying optional query strings. These can be setup by spe
                         .WithValue(SchemaValue.Uuid())
 ```
 
-### Exclusive Query Strings
+#### Exclusive Query Strings
 Query strings which must not appear are supported by specifying a parameter with a leading `!`, e.g.
 ```csharp
 .WithParameter(queryStringParameterExpectationBuilder => queryStringParameterExpectationBuilder
@@ -96,18 +165,12 @@ Query strings which must not appear are supported by specifying a parameter with
     .WithValue(SchemaValue.Integer())
 ```
 
-### Regex Matching
-Both querystring name and values can be matched by query strings, e.g.
+#### Regex Matching
+Both querystring name and values can be matched by regex strings, e.g.
 ```csharp
 .WithParameter(queryStringParameterExpectationBuilder => queryStringParameterExpectationBuilder
     .WithName("[A-z]{0,10}")
     .WithValue("[A-Z0-9\\-]+")
-```
-This would produce a call to the MockServer REST API as follows:
-```json
-    "queryStringParameters": {
-        "[A-z]{0,10}": ["[A-Z0-9\\-]+"]
-    }
 ```
 
 
@@ -129,7 +192,7 @@ This would produce a call to the MockServer REST API as follows:
     }
 ```
 
-# Configuring Response Headers
+## Configuring Response Headers
 Response headers can be configured as part of setting up a mock. Multiple headers and multiple values per header can be added. 
 
 For example, a simple static header collection can be added as follows
@@ -166,7 +229,3 @@ new MockServerClient(httpClient)
                         .WithValue(request => request.Path)))
          ));
 ```
-
-
-- Update request headers to support SchemaValue etc as per query string 
-- implement response cookie(?) - does it work?! - at least change the type on the response maybe and remove unused classes

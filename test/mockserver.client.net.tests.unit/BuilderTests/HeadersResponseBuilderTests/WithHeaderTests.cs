@@ -7,13 +7,8 @@ namespace MockServer.Client.Net.Tests.Unit.BuilderTests.HeadersResponseBuilderTe
 
 public class WithHeaderTests
 {
-    private readonly IHeadersResponseBuilder _headersResponseBuilder;
+    private readonly IHeadersResponseBuilder _headersResponseBuilder = HeadersResponseBuilder.Build(RequestBuilder.Build().Create());
 
-    public WithHeaderTests()
-    {
-        _headersResponseBuilder = HeadersResponseBuilder.Build(RequestBuilder.Build().Create());
-    }
-    
     [Fact]
     public void GivenHeaderIsAdded_WhenBuilderPassedIsNull_ThenException()
     {
@@ -31,7 +26,7 @@ public class WithHeaderTests
 
         var headers = _headersResponseBuilder.Create();
 
-        Assert.Contains(headers, pair => pair.Key == headerName && pair.Value.First() == headerValue);
+        Assert.Contains(headers, pair => pair.Key == headerName && pair.Value.First().ToString() == headerValue);
     }
 
     [Fact]
@@ -49,8 +44,8 @@ public class WithHeaderTests
 
         var headers = _headersResponseBuilder.Create();
 
-        Assert.Contains(headers, pair => pair.Key == headerOneName && pair.Value.First() == headerOneValue);
-        Assert.Contains(headers, pair => pair.Key == headerTwoName && pair.Value.First() == headerTwoValue);
+        Assert.Contains(headers, pair => pair.Key == headerOneName && pair.Value.First().ToString() == headerOneValue);
+        Assert.Contains(headers, pair => pair.Key == headerTwoName && pair.Value.First().ToString() == headerTwoValue);
     }
 
     [Fact]
@@ -60,14 +55,14 @@ public class WithHeaderTests
         var requestPath = "ThisIsTheRequestPath";
 
         var request = RequestBuilder.Build().WithPath(requestPath).Create();
-        var headersResponseBuilder = HeadersResponseBuilder.Build(request);
-        headersResponseBuilder.WithHeader(builder => builder
+        var sut = HeadersResponseBuilder.Build(request);
+        sut.WithHeader(builder => builder
             .WithName(headerOneName)
             .WithValues(headerValueResponseBuilder =>
             headerValueResponseBuilder.WithValue(request => request.Path)));
 
-        var headers = headersResponseBuilder.Create();
+        var headers = sut.Create();
 
-        Assert.Contains(headers, pair => pair.Key == headerOneName && pair.Value.First() == requestPath);
+        Assert.Contains(headers, pair => pair.Key == headerOneName && pair.Value.First().ToString() == requestPath);
     }
 }

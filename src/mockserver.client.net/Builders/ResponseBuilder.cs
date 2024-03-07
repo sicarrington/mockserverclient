@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using MockServer.Client.Net.Models;
 
 namespace MockServer.Client.Net.Builders
@@ -32,7 +33,8 @@ namespace MockServer.Client.Net.Builders
             }
             else if (_headers != null)
             {
-                _httpResponse.Headers = _headers;
+                _httpResponse.Headers = _headers.ToDictionary(pair => pair.Key, 
+                    pair => (IEnumerable<object>)pair.Value.Select(x => (object)x).ToList());
             }
 
             return _httpResponse;

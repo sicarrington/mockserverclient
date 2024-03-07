@@ -4,21 +4,31 @@ using MockServer.Client.Net.Models;
 
 namespace MockServer.Client.Net.Builders
 {
-    public interface IHeadersResponseBuilder
+    public interface IHeadersBuilder<out THeadersBuilder, THeaderBuilder>
     {
-        IHeadersResponseBuilder WithHeader(Func<IHeaderResponseBuilder, IHeaderResponseBuilder> headerResponseBuilder);
-        IDictionary<string, IEnumerable<string>> Create();
+        THeadersBuilder WithHeader(Func<THeaderBuilder, THeaderBuilder> headerResponseBuilder);
+        IDictionary<string, IEnumerable<object>> Create();
+    }
+    
+    public interface IHeadersResponseBuilder : IHeadersBuilder<IHeadersResponseBuilder, IHeaderResponseBuilder>
+    {
+
+    }
+    
+    public interface IRequestHeadersExpectationBuilder : IHeadersBuilder<IRequestHeadersExpectationBuilder, IRequestHeaderExpectationBuilder>
+    {
+
     }
     
     public sealed class HeadersResponseBuilder : IHeadersResponseBuilder
     {
         private readonly HttpRequest _httpRequest;
-        private readonly IDictionary<string, IEnumerable<string>> _headers;
+        private readonly IDictionary<string, IEnumerable<object>> _headers;
 
         private HeadersResponseBuilder(HttpRequest httpRequest)
         {
             _httpRequest = httpRequest;
-            _headers = new Dictionary<string, IEnumerable<string>>();
+            _headers = new Dictionary<string, IEnumerable<object>>();
         }
 
         public static IHeadersResponseBuilder Build(HttpRequest httpRequest)
@@ -36,7 +46,7 @@ namespace MockServer.Client.Net.Builders
             return this;
         }
 
-        public IDictionary<string, IEnumerable<string>> Create()
+        public IDictionary<string, IEnumerable<object>> Create()
         {
             return _headers;
         }

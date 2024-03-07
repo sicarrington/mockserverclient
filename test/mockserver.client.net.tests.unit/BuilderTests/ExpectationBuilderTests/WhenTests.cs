@@ -10,37 +10,32 @@ namespace MockServer.Client.Net.Tests.Unit.BuilderTests.ExpectationBuilderTests
         [Fact]
         public void GivenWhenIsCalled_WhenMockServerClientPassedIsNull_ThenExceptionIsThrown()
         {
-            var requestBuilder = RequestBuilder.Build();
+            var sut = RequestBuilder.Build();
             Assert.Throws<ArgumentNullException>(() =>
             {
-                ExpectationBuilder.When(null, requestBuilder);
+                ExpectationBuilder.When(null, sut);
             });
         }
         [Fact]
         public void GivenWhenIsCalled_WhenRequestBuilderPassedIsNull_ThenExcptionIsThrown()
         {
-            using (var httpClient = new HttpClient())
+            using var httpClient = new HttpClient();
+            var mockServerClient = new MockServerClient(httpClient);
+            Assert.Throws<ArgumentNullException>(() =>
             {
-                var mockServerClient = new MockServerClient(httpClient);
-                Assert.Throws<ArgumentNullException>(() =>
-                {
-                    ExpectationBuilder.When(mockServerClient, null);
-                });
-            }
+                ExpectationBuilder.When(mockServerClient, null);
+            });
         }
         [Fact]
         public void GivenWhenIsCalled_WhenParametersAreValid_ThenNewBuilderIsReturnedWithRequestPersisted()
         {
-            using (var httpClient = new HttpClient())
-            {
-                var mockServerClient = new MockServerClient(httpClient);
-                var requestBuilder = RequestBuilder.Build();
+            using var httpClient = new HttpClient();
+            var mockServerClient = new MockServerClient(httpClient);
+            var sut = RequestBuilder.Build();
 
-                var result = ExpectationBuilder.When(mockServerClient, requestBuilder);
+            var result = ExpectationBuilder.When(mockServerClient, sut);
 
-                Assert.Equal(requestBuilder, ((ExpectationBuilder)result).RequestBuilder);
-
-            }
+            Assert.Equal(sut, ((ExpectationBuilder)result).RequestBuilder);
         }
     }
 }

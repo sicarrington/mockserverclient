@@ -27,7 +27,7 @@ namespace MockServer.Client.Net.Models
             string body = default(string), 
             IDictionary<string,string> cookies = null, 
             ConnectionOptions connectionOptions = default(ConnectionOptions), 
-            IDictionary<string, IEnumerable<string>> headers = null, 
+            IDictionary<string, IEnumerable<object>> headers = null, 
             int? statusCode = default(int?), 
             string reasonPhrase = default(string))
         {
@@ -68,7 +68,7 @@ namespace MockServer.Client.Net.Models
         /// Gets or Sets Headers
         /// </summary>
         [DataMember(Name = "headers", EmitDefaultValue = false)]
-        public IDictionary<string, IEnumerable<string>> Headers { get; set; }
+        public IDictionary<string, IEnumerable<object>> Headers { get; set; }
 
         /// <summary>
         /// Gets or Sets StatusCode

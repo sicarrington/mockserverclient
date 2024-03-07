@@ -24,17 +24,17 @@ public class WithHeaderTests
         var headerName = "HeaderOne";
         var headerValueOne = "HeaderOneValueOne";
         var headerValueTwo = "HeaderOneValueTwo";
-        var responseBuilder = ResponseBuilder.Build(RequestBuilder.Build().Create());
+        var sut = ResponseBuilder.Build(RequestBuilder.Build().Create());
 
-        responseBuilder.WithHeaders(new Dictionary<string, IEnumerable<string>>
+        sut.WithHeaders(new Dictionary<string, IEnumerable<string>>
         {
             { headerName, new[] { headerValueOne, headerValueTwo } }
         });
 
-        var response = responseBuilder.Create();
+        var response = sut.Create();
 
         Assert.Contains(response.Headers,
-            pair => pair.Key == headerName && pair.Value.Contains(headerValueOne) &&
-                    pair.Value.Contains(headerValueTwo));
+            pair => pair.Key == headerName && pair.Value.Select(x => x.ToString()).Contains(headerValueOne) &&
+                    pair.Value.Select(x => x.ToString()).Contains(headerValueTwo));
     }
 }

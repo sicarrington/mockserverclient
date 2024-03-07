@@ -6,7 +6,6 @@ MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{228280EA-02C4-4AED-88F1-2466EC0037A1}"
 	ProjectSection(SolutionItems) = preProject
 		appveyor.yml = appveyor.yml
-		coveralls.sh = coveralls.sh
 		Readme.md = Readme.md
 		runintegrationtests.sh = runintegrationtests.sh
 	EndProjectSection

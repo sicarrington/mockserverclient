@@ -7,17 +7,12 @@ namespace MockServer.Client.Net.Tests.Unit.BuilderTests.RequestBuilderTests;
 
 public class WithCookiesTests
 {
-    private readonly IRequestBuilder _requestBuilder;
-
-    public WithCookiesTests()
-    {
-        _requestBuilder = RequestBuilder.Build();
-    }
+    private readonly IRequestBuilder _sut = RequestBuilder.Build();
 
     [Fact]
     public void GivenWithHeaders_WhenHeadersProvidedIsNull_ThenExceptionIsThrown()
     {
-        Assert.Throws<ArgumentNullException>(() => { RequestBuilder.Build().WithCookies(null); });
+        Assert.Throws<ArgumentNullException>(() => { _sut.WithCookies(null); });
     }
 
     [Fact]
@@ -25,7 +20,7 @@ public class WithCookiesTests
     {
         var expectedCookies = new Dictionary<string, string>
             { { "CookieOne", "ValueOne" }, { "CookieTwo", "ValueTwo" } };
-        var result = RequestBuilder.Build().WithCookies(expectedCookies);
+        var result = _sut.WithCookies(expectedCookies);
         Assert.Equal(expectedCookies, result.Create().Cookies);
     }
 }

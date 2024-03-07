@@ -6,20 +6,19 @@ namespace MockServer.Client.Net.Builders
 {
     public interface IHeaderValueResponseBuilder
     {
-        IHeaderValueResponseBuilder WithValue(string value);
         IHeaderValueResponseBuilder WithValue(Func<HttpRequest, string> function);
-        IEnumerable<string> Create();
+        IHeaderValueResponseBuilder WithValue(string value);
+        IHeaderValueResponseBuilder WithValue(SchemaValue schemaValue);
+        IEnumerable<object> Create();
     }
     
-    public sealed class HeaderValueResponseBuilder : IHeaderValueResponseBuilder
+    public sealed class HeaderValueResponseBuilder : HeaderValuesBuilderBase, IHeaderValueResponseBuilder
     {
         private readonly HttpRequest _httpRequest;
-        private readonly IList<object> _values;
 
-        private HeaderValueResponseBuilder(HttpRequest httpRequest)
+        private HeaderValueResponseBuilder(HttpRequest httpRequest) : base(new List<object>())
         {
             _httpRequest = httpRequest;
-            _values = new List<object>();
         }
 
         public static IHeaderValueResponseBuilder Build(HttpRequest httpRequest)
@@ -27,9 +26,9 @@ namespace MockServer.Client.Net.Builders
             return new HeaderValueResponseBuilder(httpRequest);
         }
 
-        public IHeaderValueResponseBuilder WithValue(string value)
+        public new IHeaderValueResponseBuilder WithValue(string value)
         {
-            _values.Add(value);
+            base.WithValue(value);
             return this;
         }
 
@@ -39,9 +38,15 @@ namespace MockServer.Client.Net.Builders
             return this;
         }
 
-        public IEnumerable<string> Create()
+        public new IHeaderValueResponseBuilder WithValue(SchemaValue schemaValue)
         {
-            var finalValues = new List<string>();
+            base.WithValue(schemaValue);
+            return this;
+        }
+
+        public IEnumerable<object> Create()
+        {
+            var finalValues = new List<object>();
             foreach (var value in _values)
             {
                 switch (value)
@@ -51,6 +56,9 @@ namespace MockServer.Client.Net.Builders
                         break;
                     case Func<HttpRequest, string> function:
                         finalValues.Add(function(_httpRequest));
+                        break;
+                    case SchemaValue schemaValue:
+                        finalValues.Add(new { schema = schemaValue });
                         break;
                 }
             }

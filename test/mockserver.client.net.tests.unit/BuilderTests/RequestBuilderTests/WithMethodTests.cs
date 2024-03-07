@@ -6,75 +6,71 @@ namespace MockServer.Client.Net.Tests.Unit.BuilderTests.RequestBuilderTests
 {
     public class WithMethodTests
     {
-        private readonly IRequestBuilder _requestBuilder;
-        
-        public WithMethodTests()
-        {
-            _requestBuilder = RequestBuilder.Build();
-        }
+        private readonly IRequestBuilder _sut = RequestBuilder.Build();
+
         [Fact]
         public void GivenWithMethodIsCalled_WhenMethodDeleteIsPassed_MethodIsMappedAsExpected()
         {
-            _requestBuilder.WithMethod(HttpMethod.Delete);
+            _sut.WithMethod(HttpMethod.Delete);
 
-            var result = _requestBuilder.Create();
+            var result = _sut.Create();
             Assert.Equal("DELETE", result.Method);
         }
         [Fact]
         public void GivenWithMethodIsCalled_WhenMethodGetIsPassed_MethodIsMappedAsExpected()
         {
-            _requestBuilder.WithMethod(HttpMethod.Get);
+            _sut.WithMethod(HttpMethod.Get);
 
-            var result = _requestBuilder.Create();
+            var result = _sut.Create();
             Assert.Equal("GET", result.Method);
         }
 
         [Fact]
         public void GivenWithMethodIsCalled_WhenMethodHeadIsPassed_MethodIsMappedAsExpected()
         {
-            _requestBuilder.WithMethod(HttpMethod.Head);
+            _sut.WithMethod(HttpMethod.Head);
 
-            var result = _requestBuilder.Create();
+            var result = _sut.Create();
             Assert.Equal("HEAD", result.Method);
         }
         [Fact]
         public void GivenWithMethodIsCalled_WhenMethodOptionsIsPassed_MethodIsMappedAsExpected()
         {
-            _requestBuilder.WithMethod(HttpMethod.Options);
+            _sut.WithMethod(HttpMethod.Options);
 
-            var result = _requestBuilder.Create();
+            var result = _sut.Create();
             Assert.Equal("OPTIONS", result.Method);
         }
         [Fact]
         public void GivenWithMethodIsCalled_WhenMethodPatchIsPassed_MethodIsMappedAsExpected()
         {
-            _requestBuilder.WithMethod(HttpMethod.Patch);
+            _sut.WithMethod(HttpMethod.Patch);
 
-            var result = _requestBuilder.Create();
+            var result = _sut.Create();
             Assert.Equal("PATCH", result.Method);
         }
         [Fact]
         public void GivenWithMethodIsCalled_WhenMethodPostIsPassed_MethodIsMappedAsExpected()
         {
-            _requestBuilder.WithMethod(HttpMethod.Post);
+            _sut.WithMethod(HttpMethod.Post);
 
-            var result = _requestBuilder.Create();
+            var result = _sut.Create();
             Assert.Equal("POST", result.Method);
         }
         [Fact]
         public void GivenWithMethodIsCalled_WhenMethodPutIsPassed_MethodIsMappedAsExpected()
         {
-            _requestBuilder.WithMethod(HttpMethod.Put);
+            _sut.WithMethod(HttpMethod.Put);
 
-            var result = _requestBuilder.Create();
+            var result = _sut.Create();
             Assert.Equal("PUT", result.Method);
         }
         [Fact]
         public void GivenWithMethodIsCalled_WhenMethodTraceIsPassed_MethodIsMappedAsExpected()
         {
-            _requestBuilder.WithMethod(HttpMethod.Trace);
+            _sut.WithMethod(HttpMethod.Trace);
 
-            var result = _requestBuilder.Create();
+            var result = _sut.Create();
             Assert.Equal("TRACE", result.Method);
         }
     }

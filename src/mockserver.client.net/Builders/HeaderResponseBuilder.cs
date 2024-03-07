@@ -8,14 +8,13 @@ namespace MockServer.Client.Net.Builders
     {
         IHeaderResponseBuilder WithName(string name);
         IHeaderResponseBuilder WithValues(Func<IHeaderValueResponseBuilder, IHeaderValueResponseBuilder> headerValueResponseBuilder = null);
-        KeyValuePair<string, IEnumerable<string>> Create();
+        KeyValuePair<string, IEnumerable<object>> Create();
     }
     
     public sealed class HeaderResponseBuilder : IHeaderResponseBuilder
     {
         private readonly HttpRequest _httpRequest;
         private string _name;
-        // private IHeaderValueResponseBuilder _headerValueResponseBuilder;
         private Func<IHeaderValueResponseBuilder, IHeaderValueResponseBuilder> _headerValueResponseBuilder;
         
         private HeaderResponseBuilder(HttpRequest httpRequest)
@@ -40,7 +39,7 @@ namespace MockServer.Client.Net.Builders
             return this;
         }
 
-        public KeyValuePair<string, IEnumerable<string>> Create()
+        public KeyValuePair<string, IEnumerable<object>> Create()
         {
             if (_headerValueResponseBuilder == null)
             {
@@ -51,7 +50,7 @@ namespace MockServer.Client.Net.Builders
                 throw new InvalidOperationException("No Name specified for header");
             }
             
-            return new KeyValuePair<string, IEnumerable<string>>(_name,
+            return new KeyValuePair<string, IEnumerable<object>>(_name,
                 _headerValueResponseBuilder(HeaderValueResponseBuilder.Build(_httpRequest)).Create());
         }
     }

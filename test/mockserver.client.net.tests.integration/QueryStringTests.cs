@@ -146,8 +146,7 @@ public class QueryStringTests
     }
 
     [Fact]
-    public async Task
-        GivenParameterIsSpecified_WhenParameterIsConfiguredAsExclusive_ThenRequestIncludingThatParameterIsNotMatched()
+    public async Task GivenParameterIsSpecified_WhenParameterIsConfiguredAsExclusive_ThenRequestIncludingThatParameterIsNotMatched()
     {
         var path = $"/querystringtest{Guid.NewGuid()}";
 
@@ -174,8 +173,7 @@ public class QueryStringTests
     }
 
     [Fact]
-    public async Task
-        GivenParameterIsSpecified_WhenParameterIsConfiguredAsOptional_ThenRequestWithoutThatParameterIsMatched()
+    public async Task GivenParameterIsSpecified_WhenParameterIsConfiguredAsOptional_ThenRequestWithoutThatParameterIsMatched()
     {
         var path = $"/querystringtest{Guid.NewGuid()}";;
 
@@ -202,8 +200,7 @@ public class QueryStringTests
     }
     
     [Fact]
-    public async Task
-        GivenParameterIsSpecified_WhenParameterIsConfiguredAsDifferentTypeFromRequest_ThenRequestIsNotMatched()
+    public async Task GivenParameterIsSpecified_WhenParameterIsConfiguredAsDifferentTypeFromRequest_ThenRequestIsNotMatched()
     {
         var path = $"/querystringtest{Guid.NewGuid()}";;
 
