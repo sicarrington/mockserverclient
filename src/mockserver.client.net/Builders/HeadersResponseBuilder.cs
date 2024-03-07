@@ -4,22 +4,6 @@ using MockServer.Client.Net.Models;
 
 namespace MockServer.Client.Net.Builders
 {
-    public interface IHeadersBuilder<out THeadersBuilder, THeaderBuilder>
-    {
-        THeadersBuilder WithHeader(Func<THeaderBuilder, THeaderBuilder> headerResponseBuilder);
-        IDictionary<string, IEnumerable<object>> Create();
-    }
-    
-    public interface IHeadersResponseBuilder : IHeadersBuilder<IHeadersResponseBuilder, IHeaderResponseBuilder>
-    {
-
-    }
-    
-    public interface IRequestHeadersExpectationBuilder : IHeadersBuilder<IRequestHeadersExpectationBuilder, IRequestHeaderExpectationBuilder>
-    {
-
-    }
-    
     public sealed class HeadersResponseBuilder : IHeadersResponseBuilder
     {
         private readonly HttpRequest _httpRequest;

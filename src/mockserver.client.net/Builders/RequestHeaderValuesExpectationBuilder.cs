@@ -3,13 +3,6 @@ using MockServer.Client.Net.Models;
 
 namespace MockServer.Client.Net.Builders
 {
-    public interface IRequestHeaderValuesExpectationBuilder
-    {
-        IRequestHeaderValuesExpectationBuilder WithValue(string value);
-        IRequestHeaderValuesExpectationBuilder WithValue(SchemaValue schemaValue);
-        IEnumerable<object> Create();
-    }
-    
     public sealed class RequestHeaderValuesExpectationBuilder : HeaderValuesBuilderBase, IRequestHeaderValuesExpectationBuilder
     {
         private RequestHeaderValuesExpectationBuilder() : base(new List<object>())
