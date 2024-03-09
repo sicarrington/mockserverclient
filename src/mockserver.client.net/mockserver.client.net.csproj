@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <id>mockserver.client</id>
+    <PackageId>mockserver.client</PackageId>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageVersion>1.0.0</PackageVersion>
     <Title>Mockserver Client</Title>
