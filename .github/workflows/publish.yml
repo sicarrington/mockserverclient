@@ -29,13 +29,17 @@ jobs:
     env:
       SEMVER: ${{ needs.calculate-version.outputs.semVer }}
     steps:
+      - name: Display version
+        run: |
+          echo SemVer: $SEMVER
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 6.0.x
-      - name: Display version
-        run: |
-          echo SemVer: $SEMVER
       - name: Pack nuget package
         run: dotnet pack src/mockserver.client.net/mockserver.client.net.csproj -p:Version='$SEMVER' -c Release
       - name: Push nuget package
